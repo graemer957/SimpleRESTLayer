@@ -23,7 +23,6 @@
 /* Begin PBXBuildFile section */
 		AA2477161E74B373009BD4D4 /* SimpleRESTLayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA24770C1E74B373009BD4D4 /* SimpleRESTLayer.framework */; };
 		AA24771B1E74B373009BD4D4 /* SimpleRESTLayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA24771A1E74B373009BD4D4 /* SimpleRESTLayerTests.swift */; };
-		AA24771D1E74B373009BD4D4 /* SimpleRESTLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = AA24770F1E74B373009BD4D4 /* SimpleRESTLayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AA2477271E74B5EB009BD4D4 /* JSONModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2477261E74B5EB009BD4D4 /* JSONModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -39,7 +38,6 @@
 
 /* Begin PBXFileReference section */
 		AA24770C1E74B373009BD4D4 /* SimpleRESTLayer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SimpleRESTLayer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		AA24770F1E74B373009BD4D4 /* SimpleRESTLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SimpleRESTLayer.h; sourceTree = "<group>"; };
 		AA2477101E74B373009BD4D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AA2477151E74B373009BD4D4 /* SimpleRESTLayerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleRESTLayerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA24771A1E74B373009BD4D4 /* SimpleRESTLayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleRESTLayerTests.swift; sourceTree = "<group>"; };
@@ -87,7 +85,6 @@
 		AA24770E1E74B373009BD4D4 /* SimpleRESTLayer */ = {
 			isa = PBXGroup;
 			children = (
-				AA24770F1E74B373009BD4D4 /* SimpleRESTLayer.h */,
 				AA2477101E74B373009BD4D4 /* Info.plist */,
 				AA2477261E74B5EB009BD4D4 /* JSONModel.swift */,
 			);
@@ -110,7 +107,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA24771D1E74B373009BD4D4 /* SimpleRESTLayer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
