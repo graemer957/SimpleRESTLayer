@@ -10,6 +10,7 @@
 		AA2477161E74B373009BD4D4 /* SimpleRESTLayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA24770C1E74B373009BD4D4 /* SimpleRESTLayer.framework */; };
 		AA24771B1E74B373009BD4D4 /* SimpleRESTLayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA24771A1E74B373009BD4D4 /* SimpleRESTLayerTests.swift */; };
 		AA24771D1E74B373009BD4D4 /* SimpleRESTLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = AA24770F1E74B373009BD4D4 /* SimpleRESTLayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AA2477271E74B5EB009BD4D4 /* JSONModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2477261E74B5EB009BD4D4 /* JSONModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +30,7 @@
 		AA2477151E74B373009BD4D4 /* SimpleRESTLayerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleRESTLayerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA24771A1E74B373009BD4D4 /* SimpleRESTLayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleRESTLayerTests.swift; sourceTree = "<group>"; };
 		AA24771C1E74B373009BD4D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AA2477261E74B5EB009BD4D4 /* JSONModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +75,7 @@
 			children = (
 				AA24770F1E74B373009BD4D4 /* SimpleRESTLayer.h */,
 				AA2477101E74B373009BD4D4 /* Info.plist */,
+				AA2477261E74B5EB009BD4D4 /* JSONModel.swift */,
 			);
 			path = SimpleRESTLayer;
 			sourceTree = "<group>";
@@ -148,6 +151,7 @@
 				TargetAttributes = {
 					AA24770B1E74B373009BD4D4 = {
 						CreatedOnToolsVersion = 8.2.1;
+						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
 					AA2477141E74B373009BD4D4 = {
@@ -196,6 +200,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA2477271E74B5EB009BD4D4 /* JSONModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -320,6 +325,7 @@
 		AA2477211E74B373009BD4D4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -331,6 +337,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = net.sigma957.SimpleRESTLayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -338,6 +345,7 @@
 		AA2477221E74B373009BD4D4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -356,6 +364,7 @@
 		AA2477241E74B373009BD4D4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				INFOPLIST_FILE = SimpleRESTLayerTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.sigma957.SimpleRESTLayerTests;
@@ -367,6 +376,7 @@
 		AA2477251E74B373009BD4D4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				INFOPLIST_FILE = SimpleRESTLayerTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.sigma957.SimpleRESTLayerTests;
@@ -394,6 +404,7 @@
 				AA2477221E74B373009BD4D4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		AA2477231E74B373009BD4D4 /* Build configuration list for PBXNativeTarget "SimpleRESTLayerTests" */ = {
 			isa = XCConfigurationList;
@@ -402,6 +413,7 @@
 				AA2477251E74B373009BD4D4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
