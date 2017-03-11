@@ -6,6 +6,20 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		AA2477281E74B64D009BD4D4 /* Framework */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = AA2477291E74B64D009BD4D4 /* Build configuration list for PBXAggregateTarget "Framework" */;
+			buildPhases = (
+				AA24772C1E74B655009BD4D4 /* Build Framework */,
+			);
+			dependencies = (
+			);
+			name = Framework;
+			productName = Framework;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		AA2477161E74B373009BD4D4 /* SimpleRESTLayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA24770C1E74B373009BD4D4 /* SimpleRESTLayer.framework */; };
 		AA24771B1E74B373009BD4D4 /* SimpleRESTLayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA24771A1E74B373009BD4D4 /* SimpleRESTLayerTests.swift */; };
@@ -158,6 +172,10 @@
 						CreatedOnToolsVersion = 8.2.1;
 						ProvisioningStyle = Automatic;
 					};
+					AA2477281E74B64D009BD4D4 = {
+						CreatedOnToolsVersion = 8.2.1;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = AA2477061E74B373009BD4D4 /* Build configuration list for PBXProject "SimpleRESTLayer" */;
@@ -174,6 +192,7 @@
 			targets = (
 				AA24770B1E74B373009BD4D4 /* SimpleRESTLayer */,
 				AA2477141E74B373009BD4D4 /* SimpleRESTLayerTests */,
+				AA2477281E74B64D009BD4D4 /* Framework */,
 			);
 		};
 /* End PBXProject section */
@@ -194,6 +213,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		AA24772C1E74B655009BD4D4 /* Build Framework */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Build Framework";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PROJECT_DIR}/scripts/build-framework.sh\"";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		AA2477071E74B373009BD4D4 /* Sources */ = {
@@ -385,6 +421,20 @@
 			};
 			name = Release;
 		};
+		AA24772A1E74B64D009BD4D4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		AA24772B1E74B64D009BD4D4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -414,6 +464,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		AA2477291E74B64D009BD4D4 /* Build configuration list for PBXAggregateTarget "Framework" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA24772A1E74B64D009BD4D4 /* Debug */,
+				AA24772B1E74B64D009BD4D4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
