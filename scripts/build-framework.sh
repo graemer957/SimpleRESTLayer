@@ -1,5 +1,9 @@
 ################################################################################
 #
+# build-framework.sh
+# Version: 1.0
+# Modified: 11.03.2017
+#
 # Copyright 2017 Graeme Read.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
