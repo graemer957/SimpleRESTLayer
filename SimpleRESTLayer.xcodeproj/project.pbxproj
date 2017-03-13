@@ -23,7 +23,6 @@
 /* Begin PBXBuildFile section */
 		AA2477161E74B373009BD4D4 /* SimpleRESTLayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA24770C1E74B373009BD4D4 /* SimpleRESTLayer.framework */; };
 		AA24771B1E74B373009BD4D4 /* SimpleRESTLayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA24771A1E74B373009BD4D4 /* SimpleRESTLayerTests.swift */; };
-		AA2477271E74B5EB009BD4D4 /* JSONModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2477261E74B5EB009BD4D4 /* JSONModel.swift */; };
 		AA2477341E74B76F009BD4D4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2477331E74B76F009BD4D4 /* AppDelegate.swift */; };
 		AA2477361E74B76F009BD4D4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2477351E74B76F009BD4D4 /* ViewController.swift */; };
 		AA2477391E74B76F009BD4D4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA2477371E74B76F009BD4D4 /* Main.storyboard */; };
@@ -86,7 +85,6 @@
 		AA2477151E74B373009BD4D4 /* SimpleRESTLayerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleRESTLayerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA24771A1E74B373009BD4D4 /* SimpleRESTLayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleRESTLayerTests.swift; sourceTree = "<group>"; };
 		AA24771C1E74B373009BD4D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AA2477261E74B5EB009BD4D4 /* JSONModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONModel.swift; sourceTree = "<group>"; };
 		AA2477311E74B76F009BD4D4 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA2477331E74B76F009BD4D4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AA2477351E74B76F009BD4D4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -171,7 +169,6 @@
 			isa = PBXGroup;
 			children = (
 				AA2477101E74B373009BD4D4 /* Info.plist */,
-				AA2477261E74B5EB009BD4D4 /* JSONModel.swift */,
 			);
 			path = SimpleRESTLayer;
 			sourceTree = "<group>";
@@ -453,7 +450,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA2477271E74B5EB009BD4D4 /* JSONModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
