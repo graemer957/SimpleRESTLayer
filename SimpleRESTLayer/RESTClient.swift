@@ -9,7 +9,7 @@
 import Foundation
 
 
-public final class HTTPClient {
+public final class RESTClient {
     
     // MARK: - Properties
     fileprivate let configuration: URLSessionConfiguration
