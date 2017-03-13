@@ -27,3 +27,7 @@ A simple REST layer built on top of NSURLSession
 - [ ] Add support for fastlane
 - [ ] Update demo app to reflect feastures in v0.2
 - [ ] Update documentation to reflect feastures in v0.2
+
+# Current Limitations
+- POSTing is always performed using form URL encoding
+- `RESTClient` assumes that all responses are JSON
