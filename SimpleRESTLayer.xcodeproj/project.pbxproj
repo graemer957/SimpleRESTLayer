@@ -23,7 +23,6 @@
 /* Begin PBXBuildFile section */
 		AA2477161E74B373009BD4D4 /* SimpleRESTLayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA24770C1E74B373009BD4D4 /* SimpleRESTLayer.framework */; };
 		AA24771B1E74B373009BD4D4 /* SimpleRESTLayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA24771A1E74B373009BD4D4 /* SimpleRESTLayerTests.swift */; };
-		AA2477271E74B5EB009BD4D4 /* JSONModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2477261E74B5EB009BD4D4 /* JSONModel.swift */; };
 		AA2477341E74B76F009BD4D4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2477331E74B76F009BD4D4 /* AppDelegate.swift */; };
 		AA2477361E74B76F009BD4D4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2477351E74B76F009BD4D4 /* ViewController.swift */; };
 		AA2477391E74B76F009BD4D4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA2477371E74B76F009BD4D4 /* Main.storyboard */; };
@@ -33,6 +32,12 @@
 		AA2477541E74B76F009BD4D4 /* DemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2477531E74B76F009BD4D4 /* DemoUITests.swift */; };
 		AA2477601E74B800009BD4D4 /* SimpleRESTLayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA24770C1E74B373009BD4D4 /* SimpleRESTLayer.framework */; };
 		AA2477611E74B800009BD4D4 /* SimpleRESTLayer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AA24770C1E74B373009BD4D4 /* SimpleRESTLayer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AA2477681E766004009BD4D4 /* ResponseParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2477671E766004009BD4D4 /* ResponseParser.swift */; };
+		AA24776B1E766115009BD4D4 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA24776A1E766115009BD4D4 /* Request.swift */; };
+		AA24776D1E76618B009BD4D4 /* ResponseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA24776C1E76618B009BD4D4 /* ResponseError.swift */; };
+		AA24776F1E7661E3009BD4D4 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA24776E1E7661E3009BD4D4 /* Helpers.swift */; };
+		AA2477711E766282009BD4D4 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2477701E766282009BD4D4 /* Response.swift */; };
+		AA2477731E76689C009BD4D4 /* RESTClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2477721E76689C009BD4D4 /* RESTClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,7 +91,6 @@
 		AA2477151E74B373009BD4D4 /* SimpleRESTLayerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleRESTLayerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA24771A1E74B373009BD4D4 /* SimpleRESTLayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleRESTLayerTests.swift; sourceTree = "<group>"; };
 		AA24771C1E74B373009BD4D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AA2477261E74B5EB009BD4D4 /* JSONModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONModel.swift; sourceTree = "<group>"; };
 		AA2477311E74B76F009BD4D4 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA2477331E74B76F009BD4D4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AA2477351E74B76F009BD4D4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -100,6 +104,12 @@
 		AA24774F1E74B76F009BD4D4 /* DemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA2477531E74B76F009BD4D4 /* DemoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoUITests.swift; sourceTree = "<group>"; };
 		AA2477551E74B76F009BD4D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AA2477671E766004009BD4D4 /* ResponseParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseParser.swift; sourceTree = "<group>"; };
+		AA24776A1E766115009BD4D4 /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
+		AA24776C1E76618B009BD4D4 /* ResponseError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseError.swift; sourceTree = "<group>"; };
+		AA24776E1E7661E3009BD4D4 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
+		AA2477701E766282009BD4D4 /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
+		AA2477721E76689C009BD4D4 /* RESTClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RESTClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,8 +180,11 @@
 		AA24770E1E74B373009BD4D4 /* SimpleRESTLayer */ = {
 			isa = PBXGroup;
 			children = (
+				AA24776E1E7661E3009BD4D4 /* Helpers.swift */,
 				AA2477101E74B373009BD4D4 /* Info.plist */,
-				AA2477261E74B5EB009BD4D4 /* JSONModel.swift */,
+				AA2477691E7660D7009BD4D4 /* Models */,
+				AA2477661E765FF6009BD4D4 /* Protocols */,
+				AA2477721E76689C009BD4D4 /* RESTClient.swift */,
 			);
 			path = SimpleRESTLayer;
 			sourceTree = "<group>";
@@ -222,6 +235,24 @@
 				AA24773C1E74B76F009BD4D4 /* LaunchScreen.storyboard */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		AA2477661E765FF6009BD4D4 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				AA2477671E766004009BD4D4 /* ResponseParser.swift */,
+			);
+			name = Protocols;
+			sourceTree = "<group>";
+		};
+		AA2477691E7660D7009BD4D4 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				AA24776A1E766115009BD4D4 /* Request.swift */,
+				AA2477701E766282009BD4D4 /* Response.swift */,
+				AA24776C1E76618B009BD4D4 /* ResponseError.swift */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -453,7 +484,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA2477271E74B5EB009BD4D4 /* JSONModel.swift in Sources */,
+				AA24776D1E76618B009BD4D4 /* ResponseError.swift in Sources */,
+				AA2477681E766004009BD4D4 /* ResponseParser.swift in Sources */,
+				AA24776B1E766115009BD4D4 /* Request.swift in Sources */,
+				AA24776F1E7661E3009BD4D4 /* Helpers.swift in Sources */,
+				AA2477731E76689C009BD4D4 /* RESTClient.swift in Sources */,
+				AA2477711E766282009BD4D4 /* Response.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -640,7 +676,7 @@
 				INFOPLIST_FILE = SimpleRESTLayer/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = net.sigma957.SimpleRESTLayer;
+				PRODUCT_BUNDLE_IDENTIFIER = net.sigma957.simplerestlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -660,7 +696,7 @@
 				INFOPLIST_FILE = SimpleRESTLayer/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = net.sigma957.SimpleRESTLayer;
+				PRODUCT_BUNDLE_IDENTIFIER = net.sigma957.simplerestlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
@@ -673,7 +709,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				INFOPLIST_FILE = SimpleRESTLayerTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = net.sigma957.SimpleRESTLayerTests;
+				PRODUCT_BUNDLE_IDENTIFIER = net.sigma957.simplerestlayer.tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -685,7 +721,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				INFOPLIST_FILE = SimpleRESTLayerTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = net.sigma957.SimpleRESTLayerTests;
+				PRODUCT_BUNDLE_IDENTIFIER = net.sigma957.simplerestlayer.tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -714,7 +750,7 @@
 				"DEBUG_ACTIVITY_MODE[sdk=iphonesimulator*]" = disable;
 				INFOPLIST_FILE = Demo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = net.sigma957.Demo;
+				PRODUCT_BUNDLE_IDENTIFIER = net.sigma957.simplerestlayer.demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -727,7 +763,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Demo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = net.sigma957.Demo;
+				PRODUCT_BUNDLE_IDENTIFIER = net.sigma957.simplerestlayer.demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -740,7 +776,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = DemoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = net.sigma957.DemoTests;
+				PRODUCT_BUNDLE_IDENTIFIER = net.sigma957.simplerestlayer.demo.tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Demo.app/Demo";
@@ -754,7 +790,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = DemoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = net.sigma957.DemoTests;
+				PRODUCT_BUNDLE_IDENTIFIER = net.sigma957.simplerestlayer.demo.tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Demo.app/Demo";
@@ -767,7 +803,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				INFOPLIST_FILE = DemoUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = net.sigma957.DemoUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = net.sigma957.simplerestlayer.demouitests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = Demo;
@@ -780,7 +816,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				INFOPLIST_FILE = DemoUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = net.sigma957.DemoUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = net.sigma957.simplerestlayer.demouitests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = Demo;
@@ -824,6 +860,7 @@
 				AA24772B1E74B64D009BD4D4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		AA2477561E74B76F009BD4D4 /* Build configuration list for PBXNativeTarget "Demo" */ = {
 			isa = XCConfigurationList;
@@ -832,6 +869,7 @@
 				AA2477581E74B76F009BD4D4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		AA2477591E74B76F009BD4D4 /* Build configuration list for PBXNativeTarget "DemoTests" */ = {
 			isa = XCConfigurationList;
@@ -840,6 +878,7 @@
 				AA24775B1E74B76F009BD4D4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		AA24775C1E74B76F009BD4D4 /* Build configuration list for PBXNativeTarget "DemoUITests" */ = {
 			isa = XCConfigurationList;
@@ -848,6 +887,7 @@
 				AA24775E1E74B76F009BD4D4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
