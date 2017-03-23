@@ -308,6 +308,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AA2477561E74B76F009BD4D4 /* Build configuration list for PBXNativeTarget "Demo" */;
 			buildPhases = (
+				AA0A341A1E844E3700368E0E /* swiftlint */,
 				AA24772D1E74B76F009BD4D4 /* Sources */,
 				AA24772E1E74B76F009BD4D4 /* Frameworks */,
 				AA24772F1E74B76F009BD4D4 /* Resources */,
@@ -463,6 +464,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		AA0A341A1E844E3700368E0E /* swiftlint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = swiftlint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed! Install using 'brew install swiftlint'\"\nfi";
+		};
 		AA24772C1E74B655009BD4D4 /* Build Framework */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -731,6 +746,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
 			};
 			name = Debug;
 		};

@@ -1,0 +1,12 @@
+disabled_rules:
+  - vertical_whitespace
+  - trailing_whitespace
+  - opening_brace
+  - line_length
+
+colon:
+  severity: error
+comma:
+  severity: error
+control_statement:
+  severity: error

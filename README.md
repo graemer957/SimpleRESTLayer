@@ -25,4 +25,15 @@ A simple REST layer built on top of NSURLSession
 
 # TODO
 - [ ] Add support for fastlane
-- [ ] Improve documentation
+- [ ] Update demo app to reflect feastures in v0.2
+- [ ] Update documentation to reflect feastures in v0.2
+- [ ] Add unit tests
+- [ ] Add SwiftLint
+- [ ] Add support for Carthage
+- [ ] Add support for CocoaPods
+- [ ] Add support for codecov.io (or similar)
+- [ ] Add support for codebeat.co (or similar)
+
+# Current Limitations
+- POSTing is always performed using form URL encoding
+- `RESTClient` assumes that all responses are JSON

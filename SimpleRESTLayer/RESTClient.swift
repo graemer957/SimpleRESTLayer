@@ -17,25 +17,25 @@ public final class RESTClient {
     
     // MARK: - Initialiser
     public init(appName: String? = nil, headers: [AnyHashable : Any]? = nil) {
-        let infoDictionary = Bundle.main.infoDictionary!
-        let name = appName ?? infoDictionary["CFBundleName"] as! String
-        let version = infoDictionary["CFBundleShortVersionString"] as! String
-        let build = infoDictionary["CFBundleVersion"] as! String
-        let userAgent = "\(name) v\(version) (\(build))"
-        
         self.configuration = URLSessionConfiguration.ephemeral
         self.configuration.httpAdditionalHeaders = [
-            "User-Agent" : userAgent,
-            "Accept" : "application/json;charset=utf-8",
-            "Accept-Encoding" : "gzip"
+            "Accept": "application/json;charset=utf-8",
+            "Accept-Encoding": "gzip"
         ]
+        
+        if let infoDictionary = Bundle.main.infoDictionary, let name = infoDictionary["CFBundleName"] as? String, let version = infoDictionary["CFBundleShortVersionString"] as? String, let build = infoDictionary["CFBundleVersion"] as? String
+        {
+            let userAgent = "\(appName ?? name) v\(version) (\(build))"
+            self.configuration.httpAdditionalHeaders?["User-Agent"] = userAgent
+        }
+        
         if let headers = headers {
             for (field, value) in headers {
                 self.configuration.httpAdditionalHeaders![field] = value
             }
         }
         
-        if let headers = configuration.httpAdditionalHeaders as? Dictionary<String, String> {
+        if let headers = configuration.httpAdditionalHeaders as? [String: String] {
             dprint("Configuration headers : \(headers)")
         }
     }
@@ -51,6 +51,7 @@ public final class RESTClient {
         }
         
         DispatchQueue.global(qos: DispatchQoS.QoSClass.userInitiated).async {
+            // TODO: This should only be created once!?
             let session = URLSession(configuration: self.configuration)
             let task = session.dataTask(with: request, completionHandler: { (data, response, error) in
                 #if DEBUG
@@ -62,7 +63,7 @@ public final class RESTClient {
                 
                 if let error = error as? NSError {
                     if error.domain == NSURLErrorDomain {
-                        switch (error.code) {
+                        switch error.code {
                         case NSURLErrorNotConnectedToInternet: fallthrough
                         case NSURLErrorTimedOut: fallthrough
                         case NSURLErrorCannotConnectToHost:
@@ -114,11 +115,6 @@ public final class RESTClient {
             })
             task.resume()
         }
-    }
-    
-    public func crash() {
-        let name: String? = nil
-        print("Hello \(name!)")
     }
     
     
