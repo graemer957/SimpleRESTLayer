@@ -51,6 +51,7 @@ public final class RESTClient {
         }
         
         DispatchQueue.global(qos: DispatchQoS.QoSClass.userInitiated).async {
+            // TODO: This should only be created once!?
             let session = URLSession(configuration: self.configuration)
             let task = session.dataTask(with: request, completionHandler: { (data, response, error) in
                 #if DEBUG
