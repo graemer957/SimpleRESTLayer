@@ -35,7 +35,7 @@ public final class RESTClient {
             }
         }
         
-        if let headers = configuration.httpAdditionalHeaders as? Dictionary<String, String> {
+        if let headers = configuration.httpAdditionalHeaders as? [String: String] {
             dprint("Configuration headers : \(headers)")
         }
     }

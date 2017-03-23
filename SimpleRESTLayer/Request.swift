@@ -18,7 +18,7 @@ public struct Request {
     
     
     // MARK: - Methods
-    public static func with(method: HTTPMethod, address: String, headers: Dictionary<String, String>? = nil, parameters: Dictionary<String, String>? = nil, body: Dictionary<String, String>? = nil) -> URLRequest
+    public static func with(method: HTTPMethod, address: String, headers: [String: String]? = nil, parameters: [String: String]? = nil, body: [String: String]? = nil) -> URLRequest
     {
         guard var urlComponents = URLComponents(string: address) else { fatalError("Unable to build components") }
         if let parameters = parameters {
