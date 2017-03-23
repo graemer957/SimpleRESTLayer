@@ -25,9 +25,9 @@ public final class RESTClient {
         
         self.configuration = URLSessionConfiguration.ephemeral
         self.configuration.httpAdditionalHeaders = [
-            "User-Agent" : userAgent,
-            "Accept" : "application/json;charset=utf-8",
-            "Accept-Encoding" : "gzip"
+            "User-Agent": userAgent,
+            "Accept": "application/json;charset=utf-8",
+            "Accept-Encoding": "gzip"
         ]
         if let headers = headers {
             for (field, value) in headers {
