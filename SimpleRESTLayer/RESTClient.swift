@@ -117,11 +117,6 @@ public final class RESTClient {
         }
     }
     
-    public func crash() {
-        let name: String? = nil
-        print("Hello \(name!)")
-    }
-    
     
     // MARK: - Private methods
     fileprivate func dprint(_ text: String) {
