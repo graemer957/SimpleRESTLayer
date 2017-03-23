@@ -62,7 +62,7 @@ public final class RESTClient {
                 
                 if let error = error as? NSError {
                     if error.domain == NSURLErrorDomain {
-                        switch (error.code) {
+                        switch error.code {
                         case NSURLErrorNotConnectedToInternet: fallthrough
                         case NSURLErrorTimedOut: fallthrough
                         case NSURLErrorCannotConnectToHost:
