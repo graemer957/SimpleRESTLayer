@@ -43,7 +43,7 @@ public final class RESTClient {
         session = URLSession(configuration: self.configuration)
         
         if let headers = configuration.httpAdditionalHeaders as? [String: String] {
-            dprint("Configuration headers : \(headers)")
+            dump("Configuration headers : \(headers)")
         }
     }
     
@@ -77,7 +77,7 @@ public final class RESTClient {
                             completion(Response(errorCode: .unhandled, message: error.localizedDescription))
                         }
                     } else {
-                        self.dprint("Unhandled NSURLSession Error: \(error.localizedDescription): \(error.userInfo)")
+                        self.dump("Unhandled NSURLSession Error: \(error.localizedDescription): \(error.userInfo)")
                         
                         completion(Response(errorCode: .unhandled, message: error.localizedDescription))
                     }
@@ -102,7 +102,7 @@ public final class RESTClient {
                     do {
                         let model = try parser.parse(object: json as AnyObject)
                         
-                        self.dprint("Got valid models back")
+                        self.dump("Got valid models back")
                         completion(Response(value: model, headers: urlResponse.allHeaderFields))
                     } catch let error as ResponseError {
                         completion(Response.failure(error))
@@ -112,7 +112,7 @@ public final class RESTClient {
                 } else {
                     let errorCode = ResponseError.Code(rawValue: urlResponse.statusCode) ?? .unhandled
                     if errorCode == .unhandled {
-                        self.dprint("Unhandled HTTP response code : \(urlResponse.statusCode)")
+                        self.dump("Unhandled HTTP response code : \(urlResponse.statusCode)")
                     }
                     
                     completion(Response(errorCode: errorCode))
@@ -124,41 +124,36 @@ public final class RESTClient {
     
     
     // MARK: - Private methods
-    private func dprint(_ text: String) {
+    private func dump(_ text: String) {
         #if DEBUG
             print("[RESTClient] \(text)")
         #endif
     }
     
     private func dump(request: URLRequest) {
-        print("")
-        dprint("Request URL:\t\(request.httpMethod!) \(request.url!.absoluteString)")
+        dump("Request URL:\t\(request.httpMethod!) \(request.url!.absoluteString)")
         
         if let allHTTPHeaderFields = request.allHTTPHeaderFields, allHTTPHeaderFields.count > 0 {
-            dprint("Headers:\t\t\(allHTTPHeaderFields)")
+            dump("Headers:\t\t\(allHTTPHeaderFields)")
         }
         
         if let data = request.httpBody {
-            dprint("Body:\t\t\t\(NSString(data: data, encoding: String.Encoding.utf8.rawValue)!)")
+            dump("Body:\t\t\t\(NSString(data: data, encoding: String.Encoding.utf8.rawValue)!)")
         }
-        
-        print("")
     }
     
     private func dump(response: HTTPURLResponse) {
         if let responseURL = response.url?.absoluteString {
-            dprint("Response URL:\t\(responseURL)")
+            dump("Response URL:\t\(responseURL)")
         }
-        dprint("Status:\t\t\(response.statusCode)")
+        dump("Status:\t\t\(response.statusCode)")
         
         if response.allHeaderFields.count > 0 {
-            dprint("Headers:")
+            dump("Headers:")
             for (header, value) in response.allHeaderFields {
-                dprint("\t\t\t\t\(header): \(value)")
+                dump("\t\t\t\t\(header): \(value)")
             }
         }
-        
-        print("")
     }
     
 }
