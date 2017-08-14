@@ -57,69 +57,68 @@ public final class RESTClient {
             }
         }
         
-        DispatchQueue.global(qos: DispatchQoS.QoSClass.userInitiated).async {
-            let task = self.session.dataTask(with: request, completionHandler: { (data, response, error) in
-                #if DEBUG
-                    self.dump(request: request)
-                    if let response = response as? HTTPURLResponse {
-                        self.dump(response: response)
-                    }
-                #endif
-                
-                if let error = error as NSError? {
-                    if error.domain == NSURLErrorDomain {
-                        switch error.code {
-                        case NSURLErrorNotConnectedToInternet: fallthrough
-                        case NSURLErrorTimedOut: fallthrough
-                        case NSURLErrorCannotConnectToHost:
-                            completion(Response(errorCode: .connectionError, message: "Check internet connection and try again."))
-                        default:
-                            completion(Response(errorCode: .unhandled, message: error.localizedDescription))
-                        }
-                    } else {
-                        self.dump("Unhandled NSURLSession Error: \(error.localizedDescription): \(error.userInfo)")
-                        
+        let task = self.session.dataTask(with: request, completionHandler: { data, response, error in
+            self.dump("Main thread: \(Thread.isMainThread)")
+            #if DEBUG
+                self.dump(request: request)
+                if let response = response as? HTTPURLResponse {
+                    self.dump(response: response)
+                }
+            #endif
+            
+            if let error = error as NSError? {
+                if error.domain == NSURLErrorDomain {
+                    switch error.code {
+                    case NSURLErrorNotConnectedToInternet: fallthrough
+                    case NSURLErrorTimedOut: fallthrough
+                    case NSURLErrorCannotConnectToHost:
+                        completion(Response(errorCode: .connectionError, message: "Check internet connection and try again."))
+                    default:
                         completion(Response(errorCode: .unhandled, message: error.localizedDescription))
                     }
-                    
-                    return
-                }
-                
-                guard let urlResponse = response as? HTTPURLResponse else {
-                    completion(Response(errorCode: .invalidHTTPResponse))
-                    
-                    return
-                }
-                
-                if case 200...204 = urlResponse.statusCode {
-                    guard let data = data, let json = try? JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) else
-                    {
-                        completion(Response(errorCode: .invalidJSON))
-                        
-                        return
-                    }
-                    
-                    do {
-                        let model = try parser.parse(object: json as AnyObject)
-                        
-                        self.dump("Got valid models back")
-                        completion(Response(value: model, headers: urlResponse.allHeaderFields))
-                    } catch let error as ResponseError {
-                        completion(Response.failure(error))
-                    } catch {
-                        fatalError("Unhandled error : \(error)")
-                    }
                 } else {
-                    let errorCode = ResponseError.Code(rawValue: urlResponse.statusCode) ?? .unhandled
-                    if errorCode == .unhandled {
-                        self.dump("Unhandled HTTP response code : \(urlResponse.statusCode)")
-                    }
+                    self.dump("Unhandled NSURLSession Error: \(error.localizedDescription): \(error.userInfo)")
                     
-                    completion(Response(errorCode: errorCode))
+                    completion(Response(errorCode: .unhandled, message: error.localizedDescription))
                 }
-            })
-            task.resume()
-        }
+                
+                return
+            }
+            
+            guard let urlResponse = response as? HTTPURLResponse else {
+                completion(Response(errorCode: .invalidHTTPResponse))
+                
+                return
+            }
+            
+            if case 200...204 = urlResponse.statusCode {
+                guard let data = data, let json = try? JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) else
+                {
+                    completion(Response(errorCode: .invalidJSON))
+                    
+                    return
+                }
+                
+                do {
+                    let model = try parser.parse(object: json as AnyObject)
+                    
+                    self.dump("Got valid models back")
+                    completion(Response(value: model, headers: urlResponse.allHeaderFields))
+                } catch let error as ResponseError {
+                    completion(Response.failure(error))
+                } catch {
+                    fatalError("Unhandled error : \(error)")
+                }
+            } else {
+                let errorCode = ResponseError.Code(rawValue: urlResponse.statusCode) ?? .unhandled
+                if errorCode == .unhandled {
+                    self.dump("Unhandled HTTP response code : \(urlResponse.statusCode)")
+                }
+                
+                completion(Response(errorCode: errorCode))
+            }
+        })
+        task.resume()
     }
     
     
