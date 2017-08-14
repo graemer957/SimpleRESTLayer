@@ -12,7 +12,8 @@ import Foundation
 public final class RESTClient {
     
     // MARK: - Properties
-    fileprivate let configuration: URLSessionConfiguration
+    private let configuration: URLSessionConfiguration
+    private let session: URLSession
     
     
     // MARK: - Initialiser
@@ -35,12 +36,14 @@ public final class RESTClient {
             }
         }
         
-        if let headers = configuration.httpAdditionalHeaders as? [String: String] {
-            dprint("Configuration headers : \(headers)")
-        }
-        
         if let timeout = timeout {
             configuration.timeoutIntervalForRequest = timeout
+        }
+        
+        session = URLSession(configuration: self.configuration)
+        
+        if let headers = configuration.httpAdditionalHeaders as? [String: String] {
+            dprint("Configuration headers : \(headers)")
         }
     }
     
@@ -55,13 +58,11 @@ public final class RESTClient {
         }
         
         DispatchQueue.global(qos: DispatchQoS.QoSClass.userInitiated).async {
-            // TODO: This should only be created once!?
-            let session = URLSession(configuration: self.configuration)
-            let task = session.dataTask(with: request, completionHandler: { (data, response, error) in
+            let task = self.session.dataTask(with: request, completionHandler: { (data, response, error) in
                 #if DEBUG
-                    self.dumpRequest(request)
+                    self.dump(request: request)
                     if let response = response as? HTTPURLResponse {
-                        self.dumpResponse(response)
+                        self.dump(response: response)
                     }
                 #endif
                 
@@ -123,13 +124,13 @@ public final class RESTClient {
     
     
     // MARK: - Private methods
-    fileprivate func dprint(_ text: String) {
+    private func dprint(_ text: String) {
         #if DEBUG
-            print("[Network] \(text)")
+            print("[RESTClient] \(text)")
         #endif
     }
     
-    fileprivate func dumpRequest(_ request: URLRequest) {
+    private func dump(request: URLRequest) {
         print("")
         dprint("Request URL:\t\(request.httpMethod!) \(request.url!.absoluteString)")
         
@@ -144,7 +145,7 @@ public final class RESTClient {
         print("")
     }
     
-    fileprivate func dumpResponse(_ response: HTTPURLResponse) {
+    private func dump(response: HTTPURLResponse) {
         if let responseURL = response.url?.absoluteString {
             dprint("Response URL:\t\(responseURL)")
         }
