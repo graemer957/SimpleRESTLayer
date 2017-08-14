@@ -10,7 +10,6 @@ import Foundation
 
 
 public final class RESTClient {
-    
     // MARK: - Properties
     private let configuration: URLSessionConfiguration
     private let session: URLSession
@@ -49,7 +48,7 @@ public final class RESTClient {
     
     
     // MARK: - Instance methods
-    public func execute<T: ResponseParser>(_ request: URLRequest, parser: T, handler: @escaping (Response<T.ParsedModel>) -> Void) {
+    public func execute<T: ResponseParser>(request: URLRequest, parser: T, handler: @escaping (Response<T.ParsedModel>) -> Void) {
         // Ensure all our responses are back on the main thread
         let completion = { (response: Response<T.ParsedModel>) in
             DispatchQueue.main.async {
@@ -57,8 +56,7 @@ public final class RESTClient {
             }
         }
         
-        let task = self.session.dataTask(with: request, completionHandler: { data, response, error in
-            self.dump("Main thread: \(Thread.isMainThread)")
+        session.dataTask(with: request, completionHandler: { data, response, error in
             #if DEBUG
                 self.dump(request: request)
                 if let response = response as? HTTPURLResponse {
@@ -92,7 +90,7 @@ public final class RESTClient {
             }
             
             if case 200...204 = urlResponse.statusCode {
-                guard let data = data, let json = try? JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) else
+                guard let data = data, let json = try? JSONSerialization.jsonObject(with: data, options: []) else
                 {
                     completion(Response(errorCode: .invalidJSON))
                     
@@ -117,8 +115,7 @@ public final class RESTClient {
                 
                 completion(Response(errorCode: errorCode))
             }
-        })
-        task.resume()
+        }).resume()
     }
     
     
@@ -136,8 +133,8 @@ public final class RESTClient {
             dump("Headers:\t\t\(allHTTPHeaderFields)")
         }
         
-        if let data = request.httpBody {
-            dump("Body:\t\t\t\(NSString(data: data, encoding: String.Encoding.utf8.rawValue)!)")
+        if let data = request.httpBody, let body = String(bytes: data, encoding: .utf8) {
+            dump("Body:\t\t\t\(body)")
         }
     }
     
@@ -154,5 +151,4 @@ public final class RESTClient {
             }
         }
     }
-    
 }
