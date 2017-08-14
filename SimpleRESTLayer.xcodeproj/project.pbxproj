@@ -37,6 +37,8 @@
 		AA24776D1E76618B009BD4D4 /* ResponseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA24776C1E76618B009BD4D4 /* ResponseError.swift */; };
 		AA2477711E766282009BD4D4 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2477701E766282009BD4D4 /* Response.swift */; };
 		AA2477731E76689C009BD4D4 /* RESTClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2477721E76689C009BD4D4 /* RESTClient.swift */; };
+		AA70BCCA1F420BB400E18C6E /* IP.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA70BCC91F420BB400E18C6E /* IP.swift */; };
+		AA70BCCC1F420E2E00E18C6E /* APIController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA70BCCB1F420E2E00E18C6E /* APIController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,6 +110,8 @@
 		AA24776C1E76618B009BD4D4 /* ResponseError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseError.swift; sourceTree = "<group>"; };
 		AA2477701E766282009BD4D4 /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		AA2477721E76689C009BD4D4 /* RESTClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RESTClient.swift; sourceTree = "<group>"; };
+		AA70BCC91F420BB400E18C6E /* IP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IP.swift; sourceTree = "<group>"; };
+		AA70BCCB1F420E2E00E18C6E /* APIController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -198,7 +202,9 @@
 		AA2477321E74B76F009BD4D4 /* Demo */ = {
 			isa = PBXGroup;
 			children = (
+				AA70BCCB1F420E2E00E18C6E /* APIController.swift */,
 				AA2477331E74B76F009BD4D4 /* AppDelegate.swift */,
+				AA70BCC91F420BB400E18C6E /* IP.swift */,
 				AA2477371E74B76F009BD4D4 /* Main.storyboard */,
 				AA24775F1E74B7B0009BD4D4 /* Supporting Files */,
 				AA2477351E74B76F009BD4D4 /* ViewController.swift */,
@@ -516,8 +522,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA70BCCC1F420E2E00E18C6E /* APIController.swift in Sources */,
 				AA2477361E74B76F009BD4D4 /* ViewController.swift in Sources */,
 				AA2477341E74B76F009BD4D4 /* AppDelegate.swift in Sources */,
+				AA70BCCA1F420BB400E18C6E /* IP.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
