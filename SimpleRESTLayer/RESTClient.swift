@@ -18,8 +18,8 @@ public final class RESTClient {
     
     // MARK: - Initialiser
     public init(appName: String? = nil, headers: [AnyHashable : Any]? = nil, timeout: TimeInterval? = nil) {
-        self.configuration = URLSessionConfiguration.ephemeral
-        self.configuration.httpAdditionalHeaders = [
+        configuration = URLSessionConfiguration.ephemeral
+        configuration.httpAdditionalHeaders = [
             "Accept": "application/json;charset=utf-8",
             "Accept-Encoding": "gzip"
         ]
@@ -27,12 +27,12 @@ public final class RESTClient {
         if let infoDictionary = Bundle.main.infoDictionary, let name = infoDictionary["CFBundleName"] as? String, let version = infoDictionary["CFBundleShortVersionString"] as? String, let build = infoDictionary["CFBundleVersion"] as? String
         {
             let userAgent = "\(appName ?? name) v\(version) (\(build))"
-            self.configuration.httpAdditionalHeaders?["User-Agent"] = userAgent
+            configuration.httpAdditionalHeaders?["User-Agent"] = userAgent
         }
         
         if let headers = headers {
             for (field, value) in headers {
-                self.configuration.httpAdditionalHeaders![field] = value
+                configuration.httpAdditionalHeaders![field] = value
             }
         }
         
