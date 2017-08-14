@@ -10,3 +10,7 @@ comma:
   severity: error
 control_statement:
   severity: error
+type_name:
+  min_length: 2
+identifier_name:
+  min_length: 2

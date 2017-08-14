@@ -10,14 +10,16 @@ import Foundation
 
 
 public enum Response<T> {
-    case success(T)
+    public typealias Headers = [AnyHashable: Any]
+    
+    case success(T, Headers?)
     case failure(ResponseError)
     
-    public init(value: T) {
-        self = .success(value)
+    init(value: T, headers: Headers? = nil) {
+        self = .success(value, headers)
     }
     
-    public init(errorCode: ResponseError.Code, message: String? = nil) {
+    init(errorCode: ResponseError.Code, message: String? = nil) {
         self = .failure(ResponseError(code: errorCode, message: message))
     }
 }

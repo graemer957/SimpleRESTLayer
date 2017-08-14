@@ -28,6 +28,9 @@ public struct ResponseError: Error {
         /// Response doesn't looks like HTTP response!
         case invalidHTTPResponse = 4
         
+        /// Response has not been modified since last request
+        case notModified = 304
+        
         /// The request was bad
         case badRequest = 400
         
