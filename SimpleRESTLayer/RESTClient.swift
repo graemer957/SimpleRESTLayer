@@ -98,7 +98,7 @@ public final class RESTClient {
                         let model = try parser.parse(object: json as AnyObject)
                         
                         self.dprint("Got valid models back")
-                        completion(Response(value: model))
+                        completion(Response(value: model, headers: urlResponse.allHeaderFields))
                     } catch let error as ResponseError {
                         completion(Response.failure(error))
                     } catch {
