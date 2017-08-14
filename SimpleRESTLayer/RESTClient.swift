@@ -16,7 +16,7 @@ public final class RESTClient {
     
     
     // MARK: - Initialiser
-    public init(appName: String? = nil, headers: [AnyHashable : Any]? = nil) {
+    public init(appName: String? = nil, headers: [AnyHashable : Any]? = nil, timeout: TimeInterval? = nil) {
         self.configuration = URLSessionConfiguration.ephemeral
         self.configuration.httpAdditionalHeaders = [
             "Accept": "application/json;charset=utf-8",
@@ -37,6 +37,10 @@ public final class RESTClient {
         
         if let headers = configuration.httpAdditionalHeaders as? [String: String] {
             dprint("Configuration headers : \(headers)")
+        }
+        
+        if let timeout = timeout {
+            configuration.timeoutIntervalForRequest = timeout
         }
     }
     
