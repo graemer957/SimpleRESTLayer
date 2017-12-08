@@ -71,17 +71,17 @@ public final class RESTClient {
             return true
         }
         
-        if error.domain == NSURLErrorDomain {
-            switch error.code {
-            case NSURLErrorNotConnectedToInternet, NSURLErrorTimedOut, NSURLErrorCannotConnectToHost:
-                completion(.init(.connectionError,
-                                 message: "Check internet connection and try again."))
-            default:
-                completion(.init(.unhandled, message: error.localizedDescription))
-            }
-        } else {
-            dump("Unhandled URLSession Error: \(error.localizedDescription): \(error.userInfo)")
+        switch error.code {
+        case NSURLErrorNotConnectedToInternet, NSURLErrorTimedOut,
+             NSURLErrorCannotConnectToHost where error.domain == NSURLErrorDomain:
+            completion(.init(.connectionError,
+                             message: "Check internet connection and try again."))
             
+        case _ where error.domain == NSURLErrorDomain:
+            completion(.init(.unhandled, message: error.localizedDescription))
+            
+        default:
+            dump("Unhandled URLSession Error: \(error.localizedDescription): \(error.userInfo)")
             completion(.init(.unhandled, message: error.localizedDescription))
         }
         
