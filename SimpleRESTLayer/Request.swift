@@ -36,7 +36,7 @@ public struct Request {
         
         guard let URL = urlComponents.url else { fatalError("Unable to build URL") }
         
-        let request = NSMutableURLRequest(url: URL)
+        var request = URLRequest(url: URL)
         switch method {
         case .get:
             request.httpMethod = HTTPMethod.get.rawValue
