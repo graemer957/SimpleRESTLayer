@@ -15,36 +15,20 @@ public final class RESTClient {
     private let session: URLSession
     
     // MARK: - Initialiser
-    public init(appName: String? = nil, headers: [AnyHashable: Any]? = nil, timeout: TimeInterval? = nil) {
-        configuration = URLSessionConfiguration.ephemeral
+    public init(appName: String? = nil, headers: [AnyHashable: Any]? = nil, timeout: TimeInterval = 60) {
+        let configuration: URLSessionConfiguration = .ephemeral
         configuration.httpAdditionalHeaders = [
             "Accept": "application/json;charset=utf-8",
             "Accept-Encoding": "gzip"
         ]
+        configuration.userAgent(using: appName)
+        headers?.forEach { configuration.httpAdditionalHeaders?[$0.key] = $0.value }
+        configuration.timeoutIntervalForRequest = timeout
         
-        if let infoDictionary = Bundle.main.infoDictionary,
-        let name = infoDictionary["CFBundleName"] as? String,
-        let version = infoDictionary["CFBundleShortVersionString"] as? String,
-        let build = infoDictionary["CFBundleVersion"] as? String {
-            let userAgent = "\(appName ?? name) v\(version) (\(build))"
-            configuration.httpAdditionalHeaders?["User-Agent"] = userAgent
-        }
+        self.configuration = configuration
+        self.session = URLSession(configuration: configuration)
         
-        if let headers = headers {
-            for (field, value) in headers {
-                configuration.httpAdditionalHeaders![field] = value
-            }
-        }
-        
-        if let timeout = timeout {
-            configuration.timeoutIntervalForRequest = timeout
-        }
-        
-        session = URLSession(configuration: self.configuration)
-        
-        if let headers = configuration.httpAdditionalHeaders as? [String: String] {
-            dump("Configuration headers : \(headers)")
-        }
+        dumpAllConfigurationHeaders()
     }
     
     // MARK: - Instance methods
@@ -58,7 +42,7 @@ public final class RESTClient {
             }
         }
         
-        session.dataTask(with: request, completionHandler: { data, response, error in
+        session.dataTask(with: request) { data, response, error in
             #if DEBUG
                 self.dump(request: request)
                 if let response = response as? HTTPURLResponse {
@@ -115,7 +99,7 @@ public final class RESTClient {
                 
                 completion(Response(errorCode: errorCode))
             }
-        }).resume()
+        }.resume()
     }
     
     // MARK: - Private methods
@@ -145,9 +129,27 @@ public final class RESTClient {
         
         if response.allHeaderFields.count > 0 {
             dump("Headers:")
-            for (header, value) in response.allHeaderFields {
-                dump("\t\t\t\t\(header): \(value)")
+            response.allHeaderFields.forEach { dump("\t\t\t\t\($0.key): \($0.value)") }
+        }
+    }
+    
+    private func dumpAllConfigurationHeaders() {
+        #if DEBUG
+            if let headers = configuration.httpAdditionalHeaders as? [String: String] {
+                dump("Configuration headers : \(headers)")
             }
+        #endif
+    }
+}
+
+extension URLSessionConfiguration {
+    fileprivate func userAgent(using appName: String?) {
+        if let infoDictionary = Bundle.main.infoDictionary,
+            let name = infoDictionary["CFBundleName"] as? String,
+            let version = infoDictionary["CFBundleShortVersionString"] as? String,
+            let build = infoDictionary["CFBundleVersion"] as? String {
+            let userAgent = "\(appName ?? name) v\(version) (\(build))"
+            httpAdditionalHeaders?["User-Agent"] = userAgent
         }
     }
 }

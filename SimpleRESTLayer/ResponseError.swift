@@ -45,9 +45,11 @@ public struct ResponseError: Error {
         case serverError = 500
     }
     
+    // MARK: - Properties
     public let code: Code
     public let message: String?
     
+    // MARK: - Initialiser
     public init(code: Code, message: String?) {
         self.code = code
         self.message = message
