@@ -39,6 +39,8 @@
 		AA70BCCA1F420BB400E18C6E /* IP.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA70BCC91F420BB400E18C6E /* IP.swift */; };
 		AA70BCCC1F420E2E00E18C6E /* APIController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA70BCCB1F420E2E00E18C6E /* APIController.swift */; };
 		AA7276451FDAFC2900560E94 /* Headers.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7276441FDAFC2900560E94 /* Headers.swift */; };
+		AA7276491FDB2E5600560E94 /* FormResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7276481FDB2E5500560E94 /* FormResponse.swift */; };
+		AA72764B1FDB2E6100560E94 /* JSONResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA72764A1FDB2E6100560E94 /* JSONResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -112,6 +114,8 @@
 		AA70BCC91F420BB400E18C6E /* IP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IP.swift; sourceTree = "<group>"; };
 		AA70BCCB1F420E2E00E18C6E /* APIController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIController.swift; sourceTree = "<group>"; };
 		AA7276441FDAFC2900560E94 /* Headers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Headers.swift; sourceTree = "<group>"; };
+		AA7276481FDB2E5500560E94 /* FormResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormResponse.swift; sourceTree = "<group>"; };
+		AA72764A1FDB2E6100560E94 /* JSONResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -252,8 +256,10 @@
 		AA7276421FDAFB4500560E94 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				AA70BCC91F420BB400E18C6E /* IP.swift */,
+				AA7276481FDB2E5500560E94 /* FormResponse.swift */,
 				AA7276441FDAFC2900560E94 /* Headers.swift */,
+				AA70BCC91F420BB400E18C6E /* IP.swift */,
+				AA72764A1FDB2E6100560E94 /* JSONResponse.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -526,9 +532,11 @@
 			files = (
 				AA7276451FDAFC2900560E94 /* Headers.swift in Sources */,
 				AA70BCCC1F420E2E00E18C6E /* APIController.swift in Sources */,
+				AA7276491FDB2E5600560E94 /* FormResponse.swift in Sources */,
 				AA2477361E74B76F009BD4D4 /* ViewController.swift in Sources */,
 				AA2477341E74B76F009BD4D4 /* AppDelegate.swift in Sources */,
 				AA70BCCA1F420BB400E18C6E /* IP.swift in Sources */,
+				AA72764B1FDB2E6100560E94 /* JSONResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

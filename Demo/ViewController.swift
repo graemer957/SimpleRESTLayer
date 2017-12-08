@@ -36,6 +36,41 @@ class ViewController: UIViewController {
         }
     }
     
+    @IBAction func sendJSONRequest() {
+        let headers = Headers(dictionary: [
+            "hello": "world",
+            "parameter 2": "😉"
+            ])
+        
+        do {
+            try API.postJSON(headers) { [weak self] response in
+                switch response {
+                case .success(let response):
+                    self?.handle(json: response.model)
+                case .failure(let error):
+                    self?.handle(error)
+                }
+            }
+        } catch {
+            print("Unable to send JSON due to error: \(error)")
+        }
+    }
+    
+    @IBAction func sendFormURLEncodedRequest() {
+        let parameters = [
+            "hello": "world",
+            "parameter 2": "😉"
+        ]
+        API.postFormURLEncoded(parameters) { [weak self] response in
+            switch response {
+            case .success(let response):
+                self?.handle(form: response.model)
+            case .failure(let error):
+                self?.handle(error)
+            }
+        }
+    }
+    
     // MARK: - Private methods
     private func handle(ip: IP) {
         print("Your IP address is : \(ip.address)")
@@ -44,6 +79,17 @@ class ViewController: UIViewController {
     private func handle(headers: [String: String]) {
         print("Response headers from httpbin.org:")
         headers.forEach { key, value in
+            print("\t\(key): \(value)")
+        }
+    }
+    
+    private func handle(json: JSONResponse) {
+        print("You send the following JSON to httpbin.org: \(json.string)")
+    }
+    
+    private func handle(form: FormResponse) {
+        print("You send the following parameters to httpbin.org using Form URL encoding:")
+        form.parameters.forEach { key, value in
             print("\t\(key): \(value)")
         }
     }

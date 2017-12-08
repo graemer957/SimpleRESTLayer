@@ -23,6 +23,8 @@ final class APIController {
         // swiftlint:enable identifier_name
         
         static let Headers = baseAddress + "headers"
+        
+        static let Post = baseAddress + "post"
     }
     
     // MARK: - Instance methods
@@ -50,5 +52,23 @@ final class APIController {
                 completion(.failure(error))
             }
         }
+    }
+    
+    func postJSON(_ headers: Headers, completion: @escaping (Response<JSONResponse>) -> Void) throws {
+        var request = Request.with(
+            method: .post,
+            address: URL.Post
+        )
+        try request.addJSONBody(headers)
+        client.execute(request: request, handler: completion)
+    }
+    
+    func postFormURLEncoded(_ parameters: [String: String], completion: @escaping (Response<FormResponse>) -> Void) {
+        var request = Request.with(
+            method: .post,
+            address: URL.Post
+        )
+        request.addFormURLEncodedBody(parameters)
+        client.execute(request: request, handler: completion)
     }
 }
