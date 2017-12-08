@@ -29,6 +29,6 @@ final class APIController {
             method: .get,
             address: URL.IP
         )
-        client.execute(request: request, parser: IPParser(), handler: completion)
+        client.execute(request: request, handler: completion)
     }
 }

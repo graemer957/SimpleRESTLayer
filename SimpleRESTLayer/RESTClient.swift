@@ -32,11 +32,10 @@ public final class RESTClient {
     }
     
     // MARK: - Instance methods
-    public func execute<T: ResponseParser>(request: URLRequest,
-                                           parser: T,
-                                           handler: @escaping (Response<T.ParsedModel>) -> Void) {
+    public func execute<T: Decodable>(request: URLRequest,
+                                      handler: @escaping (Response<T>) -> Void) {
         // Ensure all our responses are back on the main thread
-        let completion = { (response: Response<T.ParsedModel>) in
+        let completion = { (response: Response<T>) in
             DispatchQueue.main.async {
                 handler(response)
             }
@@ -75,19 +74,18 @@ public final class RESTClient {
             }
             
             if case 200...204 = urlResponse.statusCode {
-                guard let data = data, let json = try? JSONSerialization.jsonObject(with: data, options: []) else {
-                    completion(Response(errorCode: .invalidJSON))
-                    
-                    return
-                }
+                guard let data = data  else { preconditionFailure("Unable to unwrap data") }
                 
                 do {
-                    let model = try parser.parse(object: json as AnyObject)
+                    let decoder = JSONDecoder()
+                    let model = try decoder.decode(T.self, from: data)
                     
                     self.dump("Got valid models back")
-                    completion(Response(value: model, headers: urlResponse.allHeaderFields))
+                    completion(Response(model: model, headers: urlResponse.allHeaderFields))
                 } catch let error as ResponseError {
                     completion(Response.failure(error))
+                } catch DecodingError.dataCorrupted(_) {
+                    completion(Response(errorCode: .invalidJSON))
                 } catch {
                     fatalError("Unhandled error : \(error)")
                 }
