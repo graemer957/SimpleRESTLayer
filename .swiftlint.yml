@@ -1,16 +1,18 @@
-disabled_rules:
-  - vertical_whitespace
-  - trailing_whitespace
-  - opening_brace
-  - line_length
+# iOS template, see monorepo/Templates
+#
+# Version: 2
 
-colon:
-  severity: error
-comma:
-  severity: error
-control_statement:
-  severity: error
-type_name:
-  min_length: 2
-identifier_name:
-  min_length: 2
+disabled_rules:
+  - trailing_whitespace
+
+excluded:
+  - Vendor
+
+# Justification: Nesting types reads better at call site, eg: Constants.Files.Preview.url
+nesting:
+  type_level: 3
+
+# Justification: What the heck is the point in this not being the default!?!
+line_length:
+  ignores_urls: true
+  ignores_comments: true

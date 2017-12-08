@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 public enum Response<T> {
     public typealias Headers = [AnyHashable: Any]
     

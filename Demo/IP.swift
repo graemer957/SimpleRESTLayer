@@ -9,11 +9,11 @@
 import Foundation
 import SimpleRESTLayer
 
-
+// swiftlint:disable type_name
 struct IP {
     let address: String
 }
-
+// swiftlint:enable type_name
 
 struct IPParser: ResponseParser {
     // MARK: - ResponseParser
@@ -21,11 +21,10 @@ struct IPParser: ResponseParser {
     
     func parse(object: AnyObject) throws -> IP {
         if let dictionary = object as? [String: Any],
-            let address = dictionary["origin"] as? String
-        {
+        let address = dictionary["origin"] as? String {
             return IP(address: address)
         }
         
-        throw ResponseError(code: .invalidJSON, message:"ip : \(JSONString(from: object))")
+        throw ResponseError(code: .invalidJSON, message: "ip: \(JSONString(from: object))")
     }
 }

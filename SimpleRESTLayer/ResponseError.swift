@@ -8,9 +8,7 @@
 
 import Foundation
 
-
 public struct ResponseError: Error {
-    
     // MARK: - Enums
     public enum Code: Int {
         /// Unhandled response
@@ -54,5 +52,4 @@ public struct ResponseError: Error {
         self.code = code
         self.message = message
     }
-    
 }

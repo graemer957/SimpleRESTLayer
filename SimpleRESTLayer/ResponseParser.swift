@@ -8,20 +8,15 @@
 
 import Foundation
 
-
 public protocol ResponseParser {
-    
     associatedtype ParsedModel
     func parse(object: AnyObject) throws -> ParsedModel
-    
 }
-
 
 /// Attempt to serialise AnyObject into JSON for the purposes of debugging
 public func JSONString(from object: AnyObject) -> String {
     if let data = try? JSONSerialization.data(withJSONObject: object, options: []),
-        let string = String(data: data, encoding: .utf8)
-    {
+    let string = String(data: data, encoding: .utf8) {
         return string
     }
     

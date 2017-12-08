@@ -9,7 +9,6 @@
 import Foundation
 import SimpleRESTLayer
 
-
 final class APIController {
     // MARK: - Properties
     let client = RESTClient()
@@ -19,7 +18,9 @@ final class APIController {
         private static let baseAddress = "https://httpbin.org/"
         
         /// Returns the IP that the request came in from
+        // swiftlint:disable identifier_name
         static let IP = baseAddress + "ip"
+        // swiftlint:enable identifier_name
     }
     
     // MARK: - Instance methods

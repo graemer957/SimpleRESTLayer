@@ -8,23 +8,23 @@
 
 import Foundation
 
-
 public final class RESTClient {
     // MARK: - Properties
     private let configuration: URLSessionConfiguration
     private let session: URLSession
     
-    
     // MARK: - Initialiser
-    public init(appName: String? = nil, headers: [AnyHashable : Any]? = nil, timeout: TimeInterval? = nil) {
+    public init(appName: String? = nil, headers: [AnyHashable: Any]? = nil, timeout: TimeInterval? = nil) {
         configuration = URLSessionConfiguration.ephemeral
         configuration.httpAdditionalHeaders = [
             "Accept": "application/json;charset=utf-8",
             "Accept-Encoding": "gzip"
         ]
         
-        if let infoDictionary = Bundle.main.infoDictionary, let name = infoDictionary["CFBundleName"] as? String, let version = infoDictionary["CFBundleShortVersionString"] as? String, let build = infoDictionary["CFBundleVersion"] as? String
-        {
+        if let infoDictionary = Bundle.main.infoDictionary,
+        let name = infoDictionary["CFBundleName"] as? String,
+        let version = infoDictionary["CFBundleShortVersionString"] as? String,
+        let build = infoDictionary["CFBundleVersion"] as? String {
             let userAgent = "\(appName ?? name) v\(version) (\(build))"
             configuration.httpAdditionalHeaders?["User-Agent"] = userAgent
         }
@@ -46,9 +46,10 @@ public final class RESTClient {
         }
     }
     
-    
     // MARK: - Instance methods
-    public func execute<T: ResponseParser>(request: URLRequest, parser: T, handler: @escaping (Response<T.ParsedModel>) -> Void) {
+    public func execute<T: ResponseParser>(request: URLRequest,
+                                           parser: T,
+                                           handler: @escaping (Response<T.ParsedModel>) -> Void) {
         // Ensure all our responses are back on the main thread
         let completion = { (response: Response<T.ParsedModel>) in
             DispatchQueue.main.async {
@@ -67,10 +68,9 @@ public final class RESTClient {
             if let error = error as NSError? {
                 if error.domain == NSURLErrorDomain {
                     switch error.code {
-                    case NSURLErrorNotConnectedToInternet: fallthrough
-                    case NSURLErrorTimedOut: fallthrough
-                    case NSURLErrorCannotConnectToHost:
-                        completion(Response(errorCode: .connectionError, message: "Check internet connection and try again."))
+                    case NSURLErrorNotConnectedToInternet, NSURLErrorTimedOut, NSURLErrorCannotConnectToHost:
+                        completion(Response(errorCode: .connectionError,
+                                            message: "Check internet connection and try again."))
                     default:
                         completion(Response(errorCode: .unhandled, message: error.localizedDescription))
                     }
@@ -90,8 +90,7 @@ public final class RESTClient {
             }
             
             if case 200...204 = urlResponse.statusCode {
-                guard let data = data, let json = try? JSONSerialization.jsonObject(with: data, options: []) else
-                {
+                guard let data = data, let json = try? JSONSerialization.jsonObject(with: data, options: []) else {
                     completion(Response(errorCode: .invalidJSON))
                     
                     return
@@ -117,7 +116,6 @@ public final class RESTClient {
             }
         }).resume()
     }
-    
     
     // MARK: - Private methods
     private func dump(_ text: String) {
