@@ -39,6 +39,7 @@
 		AA2477731E76689C009BD4D4 /* RESTClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2477721E76689C009BD4D4 /* RESTClient.swift */; };
 		AA70BCCA1F420BB400E18C6E /* IP.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA70BCC91F420BB400E18C6E /* IP.swift */; };
 		AA70BCCC1F420E2E00E18C6E /* APIController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA70BCCB1F420E2E00E18C6E /* APIController.swift */; };
+		AA7276451FDAFC2900560E94 /* Headers.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7276441FDAFC2900560E94 /* Headers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -112,6 +113,7 @@
 		AA2477721E76689C009BD4D4 /* RESTClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RESTClient.swift; sourceTree = "<group>"; };
 		AA70BCC91F420BB400E18C6E /* IP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IP.swift; sourceTree = "<group>"; };
 		AA70BCCB1F420E2E00E18C6E /* APIController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIController.swift; sourceTree = "<group>"; };
+		AA7276441FDAFC2900560E94 /* Headers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Headers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -203,9 +205,8 @@
 			isa = PBXGroup;
 			children = (
 				AA70BCCB1F420E2E00E18C6E /* APIController.swift */,
-				AA2477331E74B76F009BD4D4 /* AppDelegate.swift */,
-				AA70BCC91F420BB400E18C6E /* IP.swift */,
 				AA2477371E74B76F009BD4D4 /* Main.storyboard */,
+				AA7276421FDAFB4500560E94 /* Models */,
 				AA24775F1E74B7B0009BD4D4 /* Supporting Files */,
 				AA2477351E74B76F009BD4D4 /* ViewController.swift */,
 			);
@@ -233,6 +234,7 @@
 		AA24775F1E74B7B0009BD4D4 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				AA2477331E74B76F009BD4D4 /* AppDelegate.swift */,
 				AA24773A1E74B76F009BD4D4 /* Assets.xcassets */,
 				AA24773F1E74B76F009BD4D4 /* Info.plist */,
 				AA24773C1E74B76F009BD4D4 /* LaunchScreen.storyboard */,
@@ -254,6 +256,15 @@
 				AA24776A1E766115009BD4D4 /* Request.swift */,
 				AA2477701E766282009BD4D4 /* Response.swift */,
 				AA24776C1E76618B009BD4D4 /* ResponseError.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		AA7276421FDAFB4500560E94 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				AA70BCC91F420BB400E18C6E /* IP.swift */,
+				AA7276441FDAFC2900560E94 /* Headers.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -525,6 +536,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA7276451FDAFC2900560E94 /* Headers.swift in Sources */,
 				AA70BCCC1F420E2E00E18C6E /* APIController.swift in Sources */,
 				AA2477361E74B76F009BD4D4 /* ViewController.swift in Sources */,
 				AA2477341E74B76F009BD4D4 /* AppDelegate.swift in Sources */,

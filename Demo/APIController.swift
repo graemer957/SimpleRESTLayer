@@ -21,14 +21,34 @@ final class APIController {
         // swiftlint:disable identifier_name
         static let IP = baseAddress + "ip"
         // swiftlint:enable identifier_name
+        
+        static let Headers = baseAddress + "headers"
     }
     
     // MARK: - Instance methods
     func getIP(completion: @escaping (Response<IP>) -> Void) {
+        // See https://httpbin.org/ip
         let request = Request.with(
             method: .get,
             address: URL.IP
         )
         client.execute(request: request, handler: completion)
+    }
+    
+    func getHeaders(completion: @escaping (Response<[String: String]>) -> Void) {
+        // See https://httpbin.org/headers
+        var request = Request.with(
+            method: .get,
+            address: URL.Headers
+        )
+        request.addHeaders(["custom-header": "your value here"])
+        client.execute(request: request) { (response: Response<Headers>) in
+            switch response {
+            case .success(let response):
+                completion(.success(model: response.model.dictionary, headers: response.headers))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
     }
 }

@@ -22,7 +22,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ry7-28-vXH">
-                                <rect key="frame" x="78.5" y="290" width="218" height="88"/>
+                                <rect key="frame" x="78.5" y="268" width="218" height="132"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Check console for output" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LtJ-cK-JuW">
                                         <rect key="frame" x="0.0" y="0.0" width="218" height="44"/>
@@ -41,6 +41,16 @@
                                         <state key="normal" title="Get IP"/>
                                         <connections>
                                             <action selector="findIPAddress" destination="BYZ-38-t0r" eventType="touchUpInside" id="bWc-7D-OSK"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jF2-Ee-FdQ">
+                                        <rect key="frame" x="0.0" y="88" width="218" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="9gi-3U-F3d"/>
+                                        </constraints>
+                                        <state key="normal" title="Custom Headers"/>
+                                        <connections>
+                                            <action selector="bounceHeaders" destination="BYZ-38-t0r" eventType="touchUpInside" id="yHE-ei-UnJ"/>
                                         </connections>
                                     </button>
                                 </subviews>

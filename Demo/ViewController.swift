@@ -24,4 +24,19 @@ class ViewController: UIViewController {
             }
         }
     }
+    
+    @IBAction func bounceHeaders() {
+        API.getHeaders { response in
+            switch response {
+            case .success(let response):
+                print("Response headers from httpbin.org:")
+                response.model.forEach { key, value in
+                    print("\t\(key): \(value)")
+                }
+            case .failure(let error):
+                let message = error.message != nil ? " (\(error.message!))" : ""
+                print("An error occured" + message)
+            }
+        }
+    }
 }

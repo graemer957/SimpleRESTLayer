@@ -80,12 +80,13 @@ public final class RESTClient {
                     let decoder = JSONDecoder()
                     let model = try decoder.decode(T.self, from: data)
                     
-                    self.dump("Got valid models back")
                     completion(Response(model: model, headers: urlResponse.allHeaderFields))
                 } catch let error as ResponseError {
                     completion(Response.failure(error))
                 } catch DecodingError.dataCorrupted(_) {
                     completion(Response(errorCode: .invalidJSON))
+                } catch let DecodingError.keyNotFound(key, _) {
+                    completion(Response(errorCode: .parseError, message: "key not found : \(key)"))
                 } catch {
                     fatalError("Unhandled error : \(error)")
                 }
