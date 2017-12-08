@@ -32,7 +32,6 @@
 		AA2477541E74B76F009BD4D4 /* DemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2477531E74B76F009BD4D4 /* DemoUITests.swift */; };
 		AA2477601E74B800009BD4D4 /* SimpleRESTLayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA24770C1E74B373009BD4D4 /* SimpleRESTLayer.framework */; };
 		AA2477611E74B800009BD4D4 /* SimpleRESTLayer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AA24770C1E74B373009BD4D4 /* SimpleRESTLayer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		AA2477681E766004009BD4D4 /* ResponseParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2477671E766004009BD4D4 /* ResponseParser.swift */; };
 		AA24776B1E766115009BD4D4 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA24776A1E766115009BD4D4 /* Request.swift */; };
 		AA24776D1E76618B009BD4D4 /* ResponseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA24776C1E76618B009BD4D4 /* ResponseError.swift */; };
 		AA2477711E766282009BD4D4 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2477701E766282009BD4D4 /* Response.swift */; };
@@ -106,7 +105,6 @@
 		AA24774F1E74B76F009BD4D4 /* DemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA2477531E74B76F009BD4D4 /* DemoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoUITests.swift; sourceTree = "<group>"; };
 		AA2477551E74B76F009BD4D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AA2477671E766004009BD4D4 /* ResponseParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseParser.swift; sourceTree = "<group>"; };
 		AA24776A1E766115009BD4D4 /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		AA24776C1E76618B009BD4D4 /* ResponseError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseError.swift; sourceTree = "<group>"; };
 		AA2477701E766282009BD4D4 /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
@@ -186,7 +184,6 @@
 			children = (
 				AA2477101E74B373009BD4D4 /* Info.plist */,
 				AA2477691E7660D7009BD4D4 /* Models */,
-				AA2477661E765FF6009BD4D4 /* Protocols */,
 				AA2477721E76689C009BD4D4 /* RESTClient.swift */,
 			);
 			path = SimpleRESTLayer;
@@ -240,14 +237,6 @@
 				AA24773C1E74B76F009BD4D4 /* LaunchScreen.storyboard */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		AA2477661E765FF6009BD4D4 /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-				AA2477671E766004009BD4D4 /* ResponseParser.swift */,
-			);
-			name = Protocols;
 			sourceTree = "<group>";
 		};
 		AA2477691E7660D7009BD4D4 /* Models */ = {
@@ -517,7 +506,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA24776D1E76618B009BD4D4 /* ResponseError.swift in Sources */,
-				AA2477681E766004009BD4D4 /* ResponseParser.swift in Sources */,
 				AA24776B1E766115009BD4D4 /* Request.swift in Sources */,
 				AA2477731E76689C009BD4D4 /* RESTClient.swift in Sources */,
 				AA2477711E766282009BD4D4 /* Response.swift in Sources */,

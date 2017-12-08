@@ -16,11 +16,11 @@ public enum Response<T> {
 }
 
 extension Response {
-    init(model: T, headers: Headers? = nil) {
+    init(_ model: T, headers: Headers? = nil) {
         self = .success(model: model, headers: headers)
     }
     
-    init(errorCode: ResponseError.Code, message: String? = nil) {
+    init(_ errorCode: ResponseError.Code, message: String? = nil) {
         self = .failure(ResponseError(code: errorCode, message: message))
     }
 }

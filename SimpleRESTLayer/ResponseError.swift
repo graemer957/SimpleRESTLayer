@@ -48,10 +48,11 @@ public struct ResponseError: Error {
     // MARK: - Properties
     public let code: Code
     public let message: String?
-    
-    // MARK: - Initialiser
-    public init(code: Code, message: String?) {
+}
+
+extension ResponseError {
+    init(_ code: Code) {
         self.code = code
-        self.message = message
+        self.message = nil
     }
 }

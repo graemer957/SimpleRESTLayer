@@ -10,6 +10,9 @@ import Foundation
 import Dispatch
 
 public final class RESTClient {
+    // MARK: - Typealias
+    public typealias Handler<T> = (Response<T>) -> Void
+    
     // MARK: - Properties
     private let configuration: URLSessionConfiguration
     private let session: URLSession
@@ -33,78 +36,95 @@ public final class RESTClient {
     
     // MARK: - Instance methods
     public func execute<T: Decodable>(request: URLRequest,
-                                      handler: @escaping (Response<T>) -> Void) {
+                                      handler: @escaping Handler<T>) {
         // Ensure all our responses are back on the main thread
-        let completion = { (response: Response<T>) in
-            DispatchQueue.main.async {
-                handler(response)
-            }
-        }
+        let completion = { response in DispatchQueue.main.async { handler(response) }}
         
         session.dataTask(with: request) { data, response, error in
-            #if DEBUG
-                self.dump(request: request)
-                if let response = response as? HTTPURLResponse {
-                    self.dump(response: response)
-                }
-            #endif
-            
-            if let error = error as NSError? {
-                if error.domain == NSURLErrorDomain {
-                    switch error.code {
-                    case NSURLErrorNotConnectedToInternet, NSURLErrorTimedOut, NSURLErrorCannotConnectToHost:
-                        completion(Response(errorCode: .connectionError,
-                                            message: "Check internet connection and try again."))
-                    default:
-                        completion(Response(errorCode: .unhandled, message: error.localizedDescription))
-                    }
-                } else {
-                    self.dump("Unhandled NSURLSession Error: \(error.localizedDescription): \(error.userInfo)")
-                    
-                    completion(Response(errorCode: .unhandled, message: error.localizedDescription))
-                }
-                
+            self.dump(request: request, response: response)
+            guard !self.errorOccured(error: error, completion: completion) else { return }
+            guard let response = response as? HTTPURLResponse else {
+                completion(.init(.invalidHTTPResponse))
                 return
             }
             
-            guard let urlResponse = response as? HTTPURLResponse else {
-                completion(Response(errorCode: .invalidHTTPResponse))
-                
-                return
-            }
-            
-            if case 200...204 = urlResponse.statusCode {
-                guard let data = data  else { preconditionFailure("Unable to unwrap data") }
-                
-                do {
-                    let decoder = JSONDecoder()
-                    let model = try decoder.decode(T.self, from: data)
-                    
-                    completion(Response(model: model, headers: urlResponse.allHeaderFields))
-                } catch let error as ResponseError {
-                    completion(Response.failure(error))
-                } catch DecodingError.dataCorrupted(_) {
-                    completion(Response(errorCode: .invalidJSON))
-                } catch let DecodingError.keyNotFound(key, _) {
-                    completion(Response(errorCode: .parseError, message: "key not found : \(key)"))
-                } catch {
-                    fatalError("Unhandled error : \(error)")
-                }
-            } else {
-                let errorCode = ResponseError.Code(rawValue: urlResponse.statusCode) ?? .unhandled
+            switch response.statusCode {
+            case 200...204:
+                guard let data = data else { preconditionFailure("Unable to unwrap data") }
+                self.parse(data: data, response: response, completion: completion)
+            default:
+                let errorCode = ResponseError.Code(rawValue: response.statusCode) ?? .unhandled
                 if errorCode == .unhandled {
-                    self.dump("Unhandled HTTP response code : \(urlResponse.statusCode)")
+                    self.dump("Unhandled HTTP response code : \(response.statusCode)")
                 }
                 
-                completion(Response(errorCode: errorCode))
+                completion(.init(errorCode))
             }
         }.resume()
     }
     
     // MARK: - Private methods
+    private func errorOccured<T>(error: Error?, completion: Handler<T>) -> Bool {
+        guard error != nil else { return false }
+        guard let error = error as NSError? else {
+            completion(.init(.unhandled, message: "Expecting NSError"))
+            return true
+        }
+        
+        if error.domain == NSURLErrorDomain {
+            switch error.code {
+            case NSURLErrorNotConnectedToInternet, NSURLErrorTimedOut, NSURLErrorCannotConnectToHost:
+                completion(.init(.connectionError,
+                                 message: "Check internet connection and try again."))
+            default:
+                completion(.init(.unhandled, message: error.localizedDescription))
+            }
+        } else {
+            dump("Unhandled URLSession Error: \(error.localizedDescription): \(error.userInfo)")
+            
+            completion(.init(.unhandled, message: error.localizedDescription))
+        }
+        
+        return true
+    }
+    
+    private func parse<T: Decodable>(data: Data, response: HTTPURLResponse, completion: Handler<T>) {
+        do {
+            let decoder = JSONDecoder()
+            let model = try decoder.decode(T.self, from: data)
+            
+            completion(.init(model, headers: response.allHeaderFields))
+        } catch let error as ResponseError {
+            completion(.failure(error))
+        } catch DecodingError.dataCorrupted(_) {
+            completion(.init(.invalidJSON))
+        } catch let DecodingError.keyNotFound(key, _) {
+            completion(.init(.parseError, message: "ey not found : \(key)"))
+        } catch {
+            fatalError("Unhandled error : \(error)")
+        }
+    }
+    
     private func dump(_ text: String) {
         #if DEBUG
             print("[RESTClient] \(text)")
+        #endif
+    }
+    
+    private func dumpAllConfigurationHeaders() {
+        #if DEBUG
+            if let headers = configuration.httpAdditionalHeaders as? [String: String] {
+                dump("Configuration headers : \(headers)")
+            }
+        #endif
+    }
+    
+    private func dump(request: URLRequest, response: URLResponse?) {
+        #if DEBUG
+            self.dump(request: request)
+            if let response = response as? HTTPURLResponse {
+                self.dump(response: response)
+            }
         #endif
     }
     
@@ -130,14 +150,6 @@ public final class RESTClient {
             dump("Headers:")
             response.allHeaderFields.forEach { dump("\t\t\t\t\($0.key): \($0.value)") }
         }
-    }
-    
-    private func dumpAllConfigurationHeaders() {
-        #if DEBUG
-            if let headers = configuration.httpAdditionalHeaders as? [String: String] {
-                dump("Configuration headers : \(headers)")
-            }
-        #endif
     }
 }
 
