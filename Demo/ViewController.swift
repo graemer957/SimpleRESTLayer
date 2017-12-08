@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SimpleRESTLayer
 
 class ViewController: UIViewController {
     // MARK: - Properties
@@ -14,29 +15,41 @@ class ViewController: UIViewController {
     
     // MARK: - IBActions
     @IBAction func findIPAddress() {
-        API.getIP { response in
+        API.getIP { [weak self] response in
             switch response {
             case .success(let response):
-                print("Your IP address is : \(response.model.address)")
+                self?.handle(ip: response.model)
             case .failure(let error):
-                let message = error.message != nil ? " (\(error.message!))" : ""
-                print("An error occured" + message)
+                self?.handle(error)
             }
         }
     }
     
     @IBAction func bounceHeaders() {
-        API.getHeaders { response in
+        API.getHeaders { [weak self] response in
             switch response {
             case .success(let response):
-                print("Response headers from httpbin.org:")
-                response.model.forEach { key, value in
-                    print("\t\(key): \(value)")
-                }
+                self?.handle(headers: response.model)
             case .failure(let error):
-                let message = error.message != nil ? " (\(error.message!))" : ""
-                print("An error occured" + message)
+                self?.handle(error)
             }
         }
+    }
+    
+    // MARK: - Private methods
+    private func handle(ip: IP) {
+        print("Your IP address is : \(ip.address)")
+    }
+    
+    private func handle(headers: [String: String]) {
+        print("Response headers from httpbin.org:")
+        headers.forEach { key, value in
+            print("\t\(key): \(value)")
+        }
+    }
+    
+    private func handle(_ error: ResponseError) {
+        let message = error.message != nil ? " (\(error.message!))" : ""
+        print("An error occured" + message)
     }
 }
