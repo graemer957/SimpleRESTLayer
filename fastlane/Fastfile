@@ -14,6 +14,9 @@ lane :tests do
   ensure_git_status_clean
   scan(scheme: "SimpleRESTLayer")
   scan(scheme: "Demo")
+
+  # Really this should be `swift test`, but this is not setup yet™
+  sh("swift build")
 end
 
 desc "Build framework for release"
