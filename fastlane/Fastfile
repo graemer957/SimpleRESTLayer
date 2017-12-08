@@ -1,0 +1,27 @@
+# iOS template, see monorepo/Templates
+#
+# Version: 2
+
+# Skip the creation of fastlane documentation. Can always be done manually with 'fastlane docs'
+skip_docs
+
+fastlane_version "2.62.1"
+
+default_platform :ios
+
+desc "Run all UI and Unit tests"
+lane :tests do
+  ensure_git_status_clean
+  scan(scheme: "SimpleRESTLayer")
+  scan(scheme: "Demo")
+end
+
+desc "Build framework for release"
+lane :build do
+  ensure_git_status_clean
+  xcodebuild(
+    archive: false,
+    scheme: "Framework"
+  )
+  clean_build_artifacts
+end
