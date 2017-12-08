@@ -4,6 +4,8 @@
 
 disabled_rules:
   - trailing_whitespace
+  - type_name # Because we use a model called 'IP'
+  - identifier_name # Same as type_name
 
 excluded:
   - Vendor

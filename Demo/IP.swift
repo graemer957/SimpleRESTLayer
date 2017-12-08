@@ -8,7 +8,6 @@
 
 import Foundation
 
-// swiftlint:disable type_name
 struct IP: Codable {
     let address: String
     
@@ -16,4 +15,3 @@ struct IP: Codable {
         case address = "origin"
     }
 }
-// swiftlint:enable type_name
