@@ -21,7 +21,7 @@ public final class RESTClient {
     public init(appName: String? = nil, headers: [AnyHashable: Any]? = nil, timeout: TimeInterval = 60) {
         let configuration: URLSessionConfiguration = .ephemeral
         configuration.httpAdditionalHeaders = [
-            "Accept": "application/json;charset=utf-8",
+            "Accept": "application/json; charset=utf-8",
             "Accept-Encoding": "gzip"
         ]
         configuration.userAgent(using: appName)

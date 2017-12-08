@@ -46,9 +46,16 @@ public extension URLRequest {
         components.setQueryItems(from: body)
         
         if let urlEncodedBodyParameters = components.percentEncodedQuery {
-            addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+            addValue("application/x-www-form-urlencoded; charset=utf-8", forHTTPHeaderField: "Content-Type")
             httpBody = urlEncodedBodyParameters.data(using: .utf8)
         }
+    }
+    
+    public mutating func addJSONBody<T: Encodable>(_ body: T) throws {
+        let encoder = JSONEncoder()
+        let data = try encoder.encode(body)
+        addValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+        httpBody = data
     }
 }
 
