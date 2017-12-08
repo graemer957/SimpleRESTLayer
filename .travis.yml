@@ -3,11 +3,12 @@ os:
 language: generic
 sudo: required
 dist: trusty
-osx_image: xcode8.2
+osx_image: xcode9.2
 
 before_install:
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
-      gem install xcpretty -N --no-ri --no-rdoc;
+      gem install bundle
+      bundle install
     fi
 
 script:
@@ -15,8 +16,5 @@ script:
       swift -version;
       xcodebuild -version;
       xcodebuild -showsdks;
-      set -o pipefail;
-      xcodebuild -project SimpleRESTLayer.xcodeproj -scheme SimpleRESTLayer -destination "platform=iOS Simulator,OS=10.2,name=iPad Air" -configuration Debug ONLY_ACTIVE_ARCH=NO clean build | xcpretty;
-      xcodebuild -project SimpleRESTLayer.xcodeproj -scheme Framework -destination "platform=iOS Simulator,OS=10.2,name=iPad Air" -configuration Release ONLY_ACTIVE_ARCH=NO clean build | xcpretty;
-      xcodebuild -project SimpleRESTLayer.xcodeproj -scheme Demo -destination "platform=iOS Simulator,OS=10.2,name=iPad Air" -configuration Release ONLY_ACTIVE_ARCH=NO clean build | xcpretty;
+      bundle exec fastlane tests
     fi
