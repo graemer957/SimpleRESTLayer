@@ -13,7 +13,9 @@ public enum Response<T> {
     
     case success(model: T, headers: Headers?)
     case failure(ResponseError)
-    
+}
+
+extension Response {
     init(model: T, headers: Headers? = nil) {
         self = .success(model: model, headers: headers)
     }
