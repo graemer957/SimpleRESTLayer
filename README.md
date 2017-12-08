@@ -1,5 +1,5 @@
 # SimpleRESTLayer
-[![Build Status](https://img.shields.io/travis/graemer957/SimpleRESTLayer/master.svg)](https://travis-ci.org/graemer957/SimpleRESTLayer)
+[![Build Status](https://gitlab.com/optimisedlabs/simplerestlayer/badges/master/pipeline.svg)](https://gitlab.com/optimisedlabs/simplerestlayer/commits/master)
 [![codebeat badge](https://codebeat.co/badges/118122e9-f912-47e5-89d2-13a5dcc92f34)](https://codebeat.co/projects/github-com-graemer957-simplerestlayer-master)
 [![Language](https://img.shields.io/badge/language-Swift%203.0-orange.svg)](https://developer.apple.com/swift/)
 [![Platforms](https://img.shields.io/badge/platform-ios-yellow.svg)](http://www.apple.com/ios/)
