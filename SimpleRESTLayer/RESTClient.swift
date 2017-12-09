@@ -9,7 +9,7 @@
 import Foundation
 import Dispatch
 
-public final class RESTClient {
+public struct RESTClient {
     // MARK: - Typealias
     public typealias Handler<T> = (Response<T>) -> Void
     
