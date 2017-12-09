@@ -68,8 +68,13 @@ public struct RESTClient {
             }
             
             switch response.statusCode {
+            case 200...204 where T.self == RawResponse.self:
+                self.parse(data: RawResponse.from(data), response: response, completion: completion)
             case 200...204:
-                guard let data = data else { preconditionFailure("Unable to unwrap data") }
+                guard let data = data else {
+                    completion(.init(.noData))
+                    return
+                }
                 self.parse(data: data, response: response, completion: completion)
             default:
                 let errorCode = ResponseError.Code(rawValue: response.statusCode) ?? .unhandled

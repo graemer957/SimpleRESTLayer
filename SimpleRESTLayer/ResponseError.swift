@@ -26,6 +26,9 @@ public struct ResponseError: Error {
         /// Response doesn't looks like HTTP response!
         case invalidHTTPResponse = 4
         
+        /// Response doesn't contain any data to turn into model!
+        case noData = 5
+        
         /// Response has not been modified since last request
         case notModified = 304
         

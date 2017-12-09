@@ -36,6 +36,7 @@
 		AA24776D1E76618B009BD4D4 /* ResponseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA24776C1E76618B009BD4D4 /* ResponseError.swift */; };
 		AA2477711E766282009BD4D4 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2477701E766282009BD4D4 /* Response.swift */; };
 		AA2477731E76689C009BD4D4 /* RESTClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2477721E76689C009BD4D4 /* RESTClient.swift */; };
+		AA2D8E9B1FDC5D6600216D06 /* RawResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2D8E9A1FDC5D6600216D06 /* RawResponse.swift */; };
 		AA70BCCA1F420BB400E18C6E /* IP.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA70BCC91F420BB400E18C6E /* IP.swift */; };
 		AA70BCCC1F420E2E00E18C6E /* APIController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA70BCCB1F420E2E00E18C6E /* APIController.swift */; };
 		AA7276451FDAFC2900560E94 /* Headers.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7276441FDAFC2900560E94 /* Headers.swift */; };
@@ -111,6 +112,7 @@
 		AA24776C1E76618B009BD4D4 /* ResponseError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseError.swift; sourceTree = "<group>"; };
 		AA2477701E766282009BD4D4 /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		AA2477721E76689C009BD4D4 /* RESTClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RESTClient.swift; sourceTree = "<group>"; };
+		AA2D8E9A1FDC5D6600216D06 /* RawResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RawResponse.swift; sourceTree = "<group>"; };
 		AA70BCC91F420BB400E18C6E /* IP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IP.swift; sourceTree = "<group>"; };
 		AA70BCCB1F420E2E00E18C6E /* APIController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIController.swift; sourceTree = "<group>"; };
 		AA7276441FDAFC2900560E94 /* Headers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Headers.swift; sourceTree = "<group>"; };
@@ -246,6 +248,7 @@
 		AA2477691E7660D7009BD4D4 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				AA2D8E9A1FDC5D6600216D06 /* RawResponse.swift */,
 				AA24776A1E766115009BD4D4 /* Request.swift */,
 				AA2477701E766282009BD4D4 /* Response.swift */,
 				AA24776C1E76618B009BD4D4 /* ResponseError.swift */,
@@ -514,6 +517,7 @@
 				AA24776D1E76618B009BD4D4 /* ResponseError.swift in Sources */,
 				AA24776B1E766115009BD4D4 /* Request.swift in Sources */,
 				AA2477731E76689C009BD4D4 /* RESTClient.swift in Sources */,
+				AA2D8E9B1FDC5D6600216D06 /* RawResponse.swift in Sources */,
 				AA2477711E766282009BD4D4 /* Response.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
