@@ -22,7 +22,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ry7-28-vXH">
-                                <rect key="frame" x="78.5" y="224" width="218" height="220"/>
+                                <rect key="frame" x="78.5" y="202" width="218" height="264"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Check console for output" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LtJ-cK-JuW">
                                         <rect key="frame" x="0.0" y="0.0" width="218" height="44"/>
@@ -71,6 +71,16 @@
                                         <state key="normal" title="Post FormURLEncoded"/>
                                         <connections>
                                             <action selector="sendFormURLEncodedRequest" destination="BYZ-38-t0r" eventType="touchUpInside" id="YYF-sr-pRT"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oWv-1s-nDz">
+                                        <rect key="frame" x="0.0" y="220" width="218" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="w3E-uC-Mwt"/>
+                                        </constraints>
+                                        <state key="normal" title="Get data"/>
+                                        <connections>
+                                            <action selector="getData" destination="BYZ-38-t0r" eventType="touchUpInside" id="9Vb-lt-RgE"/>
                                         </connections>
                                     </button>
                                 </subviews>

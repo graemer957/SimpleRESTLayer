@@ -66,6 +66,14 @@ class ViewController: UIViewController {
         }
     }
     
+    @IBAction func getData() {
+        API.getData(bytes: 0) { [weak self] response in
+            self?.handle(response) { rawResponse in
+                print("httpbin.org returned \(rawResponse.data?.count ?? 0) bytes of data")
+            }
+        }
+    }
+    
     // MARK: - Private methods
     private func handle<T>(_ response: Response<T>, completion: (T) -> Void) {
         switch response {

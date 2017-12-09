@@ -25,6 +25,10 @@ final class APIController {
         static let Headers = baseAddress + "headers"
         
         static let Post = baseAddress + "post"
+        
+        static func Data(bytes: Int) -> String {
+            return baseAddress + "bytes/\(bytes)"
+        }
     }
     
     // MARK: - Instance methods
@@ -55,6 +59,7 @@ final class APIController {
     }
     
     func postJSON(_ headers: Headers, completion: @escaping (Response<JSONResponse>) -> Void) throws {
+        // See https://httpbin.org
         var request = Request.with(
             method: .post,
             address: URL.Post
@@ -64,11 +69,21 @@ final class APIController {
     }
     
     func postFormURLEncoded(_ parameters: [String: String], completion: @escaping (Response<FormResponse>) -> Void) {
+        // See https://httpbin.org
         var request = Request.with(
             method: .post,
             address: URL.Post
         )
         request.addFormURLEncodedBody(parameters)
+        client.execute(request: request, handler: completion)
+    }
+    
+    func getData(bytes: Int, completion: @escaping (Response<RawResponse>) -> Void) {
+        // See https://httpbin.org
+        let request = Request.with(
+            method: .get,
+            address: URL.Data(bytes: bytes)
+        )
         client.execute(request: request, handler: completion)
     }
 }
