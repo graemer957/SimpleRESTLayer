@@ -108,7 +108,7 @@ public struct RESTClient {
         } catch DecodingError.dataCorrupted(_) {
             completion(.init(.invalidJSON))
         } catch let DecodingError.keyNotFound(key, _) {
-            completion(.init(.parseError, message: "ey not found : \(key)"))
+            completion(.init(.parseError, message: "key not found : \(key)"))
         } catch {
             completion(.init(.unhandled, message: "Error parsing: \(error)"))
         }
