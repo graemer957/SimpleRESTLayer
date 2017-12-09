@@ -8,18 +8,19 @@
 
 import Foundation
 
-
 public enum Response<T> {
     public typealias Headers = [AnyHashable: Any]
     
-    case success(T, Headers?)
+    case success(model: T, headers: Headers?)
     case failure(ResponseError)
-    
-    init(value: T, headers: Headers? = nil) {
-        self = .success(value, headers)
+}
+
+extension Response {
+    init(_ model: T, headers: Headers? = nil) {
+        self = .success(model: model, headers: headers)
     }
     
-    init(errorCode: ResponseError.Code, message: String? = nil) {
+    init(_ errorCode: ResponseError.Code, message: String? = nil) {
         self = .failure(ResponseError(code: errorCode, message: message))
     }
 }

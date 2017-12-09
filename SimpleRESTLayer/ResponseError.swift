@@ -8,9 +8,7 @@
 
 import Foundation
 
-
 public struct ResponseError: Error {
-    
     // MARK: - Enums
     public enum Code: Int {
         /// Unhandled response
@@ -47,12 +45,14 @@ public struct ResponseError: Error {
         case serverError = 500
     }
     
+    // MARK: - Properties
     public let code: Code
     public let message: String?
-    
-    public init(code: Code, message: String?) {
+}
+
+extension ResponseError {
+    init(_ code: Code) {
         self.code = code
-        self.message = message
+        self.message = nil
     }
-    
 }

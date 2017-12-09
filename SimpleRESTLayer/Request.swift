@@ -8,61 +8,59 @@
 
 import Foundation
 
-
 public struct Request {
     // MARK: - Enums
     public enum HTTPMethod: String {
         case get = "GET"
         case post = "POST"
+        case put = "PUT"
+        case delete = "DELETE"
     }
     
-    
     // MARK: - Methods
-    // swiftlint:disable cyclomatic_complexity
-    public static func with(method: HTTPMethod, address: String, headers: [String: String]? = nil, parameters: [String: String]? = nil, body: [String: String]? = nil) -> URLRequest
-    // swiftlint:enable cyclomatic_complexity
-    {
-        guard var urlComponents = URLComponents(string: address) else { fatalError("Unable to build components") }
+    public static func with(method: HTTPMethod,
+                            address: String,
+                            parameters: [String: String]? = nil) -> URLRequest {
+        guard var urlComponents = URLComponents(string: address) else {
+            preconditionFailure("Could not build URLComponents from address")
+        }
         if let parameters = parameters {
-            urlComponents.queryItems = [URLQueryItem]()
-            
-            for (name, value) in parameters {
-                let queryItem = URLQueryItem(name: name, value: value)
-                urlComponents.queryItems?.append(queryItem)
-            }
+            urlComponents.setQueryItems(from: parameters)
         }
+        guard let URL = urlComponents.url else { preconditionFailure("Could not get .url from URLComponents") }
         
-        guard let URL = urlComponents.url else { fatalError("Unable to build URL") }
+        var request = URLRequest(url: URL)
+        request.httpMethod = method.rawValue
         
-        let request = NSMutableURLRequest(url: URL)
-        switch method {
-        case .get:
-            request.httpMethod = HTTPMethod.get.rawValue
-        case .post:
-            request.httpMethod = HTTPMethod.post.rawValue
+        return request
+    }
+}
+
+public extension URLRequest {
+    public mutating func addHeaders(_ headers: [String: String]) {
+        headers.forEach { addValue($0.value, forHTTPHeaderField: $0.key) }
+    }
+    
+    public mutating func addFormURLEncodedBody(_ body: [String: String]) {
+        var components = URLComponents()
+        components.setQueryItems(from: body)
+        
+        if let urlEncodedBodyParameters = components.percentEncodedQuery {
+            addValue("application/x-www-form-urlencoded; charset=utf-8", forHTTPHeaderField: "Content-Type")
+            httpBody = urlEncodedBodyParameters.data(using: .utf8)
         }
-        
-        if let headers = headers {
-            for (field, value) in headers {
-                request.addValue(value, forHTTPHeaderField: field)
-            }
-        }
-        
-        if let body = body {
-            var bodyComponents = URLComponents()
-            bodyComponents.queryItems = [URLQueryItem]()
-            
-            for (name, value) in body {
-                let queryItem = URLQueryItem(name: name, value: value)
-                bodyComponents.queryItems?.append(queryItem)
-            }
-            
-            if let urlEncodedBodyParameters = bodyComponents.percentEncodedQuery {
-                request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-                request.httpBody = urlEncodedBodyParameters.data(using: String.Encoding.utf8)
-            }
-        }
-        
-        return request as URLRequest
+    }
+    
+    public mutating func addJSONBody<T: Encodable>(_ body: T) throws {
+        let encoder = JSONEncoder()
+        let data = try encoder.encode(body)
+        addValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+        httpBody = data
+    }
+}
+
+extension URLComponents {
+    mutating func setQueryItems(from dictionary: [String: String]) {
+        queryItems = dictionary.map { URLQueryItem(name: $0.key, value: $0.value) }
     }
 }

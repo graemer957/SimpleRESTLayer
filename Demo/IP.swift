@@ -7,25 +7,11 @@
 //
 
 import Foundation
-import SimpleRESTLayer
 
-
-struct IP {
+struct IP: Codable {
     let address: String
-}
-
-
-struct IPParser: ResponseParser {
-    // MARK: - ResponseParser
-    typealias ParsedModel = IP
     
-    func parse(object: AnyObject) throws -> IP {
-        if let dictionary = object as? [String: Any],
-            let address = dictionary["origin"] as? String
-        {
-            return IP(address: address)
-        }
-        
-        throw ResponseError(code: .invalidJSON, message:"ip : \(JSONString(from: object))")
+    enum CodingKeys: String, CodingKey {
+        case address = "origin"
     }
 }

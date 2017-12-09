@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import SimpleRESTLayer
 
 class ViewController: UIViewController {
     // MARK: - Properties
@@ -15,24 +15,65 @@ class ViewController: UIViewController {
     
     // MARK: - IBActions
     @IBAction func findIPAddress() {
-        API.getIP { response in
-            switch response {
-            case .success(let response):
-                self.showAlert(title: "IP Address", message: "Your IP address is : \(response.0.address)")
-            case .failure(let error):
-                let message = error.message != nil ? " (\(error.message!))" : ""
-                self.showAlert(title: "Error", message: "An error occured" + message)
+        API.getIP { [weak self] response in
+            self?.handle(response) { ip in
+                print("Your IP address is : \(ip.address)")
+            }
+        }
+    }
+    
+    @IBAction func bounceHeaders() {
+        API.getHeaders { [weak self] response in
+            self?.handle(response) { headers in
+                print("Response headers from httpbin.org:")
+                headers.forEach { key, value in
+                    print("\t\(key): \(value)")
+                }
+            }
+        }
+    }
+    
+    @IBAction func sendJSONRequest() {
+        let headers = Headers(dictionary: [
+            "hello": "world",
+            "parameter 2": "😉"
+            ])
+        
+        do {
+            try API.postJSON(headers) { [weak self] response in
+                self?.handle(response) { json in
+                    print("You send the following JSON to httpbin.org: \(json.string)")
+                }
+            }
+        } catch {
+            print("Unable to send JSON due to error: \(error)")
+        }
+    }
+    
+    @IBAction func sendFormURLEncodedRequest() {
+        let parameters = [
+            "hello": "world",
+            "parameter 2": "😉"
+        ]
+        
+        API.postFormURLEncoded(parameters) { [weak self] response in
+            self?.handle(response) { form in
+                print("You send the following parameters to httpbin.org using Form URL encoding:")
+                form.parameters.forEach { key, value in
+                    print("\t\(key): \(value)")
+                }
             }
         }
     }
     
     // MARK: - Private methods
-    private func showAlert(title: String, message: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let okButton = UIAlertAction(title: "OK", style: .default) { _ in
-            self.dismiss(animated: true)
+    private func handle<T>(_ response: Response<T>, completion: (T) -> Void) {
+        switch response {
+        case let .success(response):
+            completion(response.model)
+        case let .failure(error):
+            let message = error.message != nil ? " (\(error.message!))" : ""
+            print("An error occured" + message)
         }
-        alertController.addAction(okButton)
-        present(alertController, animated: true)
     }
 }

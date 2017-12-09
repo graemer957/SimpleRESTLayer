@@ -7,122 +7,119 @@
 //
 
 import Foundation
+import Dispatch
 
-
-public final class RESTClient {
+public struct RESTClient {
+    // MARK: - Typealias
+    public typealias Handler<T> = (Response<T>) -> Void
+    
     // MARK: - Properties
     private let configuration: URLSessionConfiguration
     private let session: URLSession
     
-    
     // MARK: - Initialiser
-    public init(appName: String? = nil, headers: [AnyHashable : Any]? = nil, timeout: TimeInterval? = nil) {
-        configuration = URLSessionConfiguration.ephemeral
+    public init(appName: String? = nil, headers: [AnyHashable: Any]? = nil, timeout: TimeInterval = 60) {
+        let configuration: URLSessionConfiguration = .ephemeral
         configuration.httpAdditionalHeaders = [
-            "Accept": "application/json;charset=utf-8",
+            "Accept": "application/json; charset=utf-8",
             "Accept-Encoding": "gzip"
         ]
+        configuration.userAgent(using: appName)
+        headers?.forEach { configuration.httpAdditionalHeaders?[$0.key] = $0.value }
+        configuration.timeoutIntervalForRequest = timeout
         
-        if let infoDictionary = Bundle.main.infoDictionary, let name = infoDictionary["CFBundleName"] as? String, let version = infoDictionary["CFBundleShortVersionString"] as? String, let build = infoDictionary["CFBundleVersion"] as? String
-        {
-            let userAgent = "\(appName ?? name) v\(version) (\(build))"
-            configuration.httpAdditionalHeaders?["User-Agent"] = userAgent
-        }
+        self.configuration = configuration
+        self.session = URLSession(configuration: configuration)
         
-        if let headers = headers {
-            for (field, value) in headers {
-                configuration.httpAdditionalHeaders![field] = value
-            }
-        }
-        
-        if let timeout = timeout {
-            configuration.timeoutIntervalForRequest = timeout
-        }
-        
-        session = URLSession(configuration: self.configuration)
-        
-        if let headers = configuration.httpAdditionalHeaders as? [String: String] {
-            dump("Configuration headers : \(headers)")
-        }
+        dumpAllConfigurationHeaders()
     }
-    
     
     // MARK: - Instance methods
-    public func execute<T: ResponseParser>(request: URLRequest, parser: T, handler: @escaping (Response<T.ParsedModel>) -> Void) {
+    public func execute<T: Decodable>(request: URLRequest,
+                                      handler: @escaping Handler<T>) {
         // Ensure all our responses are back on the main thread
-        let completion = { (response: Response<T.ParsedModel>) in
-            DispatchQueue.main.async {
-                handler(response)
-            }
-        }
+        let completion = { response in DispatchQueue.main.async { handler(response) }}
         
-        session.dataTask(with: request, completionHandler: { data, response, error in
-            #if DEBUG
-                self.dump(request: request)
-                if let response = response as? HTTPURLResponse {
-                    self.dump(response: response)
-                }
-            #endif
-            
-            if let error = error as NSError? {
-                if error.domain == NSURLErrorDomain {
-                    switch error.code {
-                    case NSURLErrorNotConnectedToInternet: fallthrough
-                    case NSURLErrorTimedOut: fallthrough
-                    case NSURLErrorCannotConnectToHost:
-                        completion(Response(errorCode: .connectionError, message: "Check internet connection and try again."))
-                    default:
-                        completion(Response(errorCode: .unhandled, message: error.localizedDescription))
-                    }
-                } else {
-                    self.dump("Unhandled NSURLSession Error: \(error.localizedDescription): \(error.userInfo)")
-                    
-                    completion(Response(errorCode: .unhandled, message: error.localizedDescription))
-                }
-                
+        session.dataTask(with: request) { data, response, error in
+            self.dump(request: request, response: response)
+            guard !self.errorOccured(error: error, completion: completion) else { return }
+            guard let response = response as? HTTPURLResponse else {
+                completion(.init(.invalidHTTPResponse))
                 return
             }
             
-            guard let urlResponse = response as? HTTPURLResponse else {
-                completion(Response(errorCode: .invalidHTTPResponse))
-                
-                return
-            }
-            
-            if case 200...204 = urlResponse.statusCode {
-                guard let data = data, let json = try? JSONSerialization.jsonObject(with: data, options: []) else
-                {
-                    completion(Response(errorCode: .invalidJSON))
-                    
-                    return
-                }
-                
-                do {
-                    let model = try parser.parse(object: json as AnyObject)
-                    
-                    self.dump("Got valid models back")
-                    completion(Response(value: model, headers: urlResponse.allHeaderFields))
-                } catch let error as ResponseError {
-                    completion(Response.failure(error))
-                } catch {
-                    fatalError("Unhandled error : \(error)")
-                }
-            } else {
-                let errorCode = ResponseError.Code(rawValue: urlResponse.statusCode) ?? .unhandled
+            switch response.statusCode {
+            case 200...204:
+                guard let data = data else { preconditionFailure("Unable to unwrap data") }
+                self.parse(data: data, response: response, completion: completion)
+            default:
+                let errorCode = ResponseError.Code(rawValue: response.statusCode) ?? .unhandled
                 if errorCode == .unhandled {
-                    self.dump("Unhandled HTTP response code : \(urlResponse.statusCode)")
+                    self.dump("Unhandled HTTP response code : \(response.statusCode)")
                 }
                 
-                completion(Response(errorCode: errorCode))
+                completion(.init(errorCode))
             }
-        }).resume()
+        }.resume()
     }
     
-    
     // MARK: - Private methods
+    private func errorOccured<T>(error: Error?, completion: Handler<T>) -> Bool {
+        guard let error = error else { return false }
+        guard let urlError = error as? URLError else {
+            completion(.init(.unhandled, message: error.localizedDescription))
+            return true
+        }
+        
+        switch urlError.code {
+        case .notConnectedToInternet, .timedOut, .cannotConnectToHost:
+            completion(.init(.connectionError,
+                             message: "Check internet connection and try again."))
+        default:
+            dump("Unhandled URLError \(urlError.code), reason: \(error.localizedDescription)")
+            completion(.init(.unhandled, message: error.localizedDescription))
+        }
+        
+        return true
+    }
+    
+    private func parse<T: Decodable>(data: Data, response: HTTPURLResponse, completion: Handler<T>) {
+        do {
+            let decoder = JSONDecoder()
+            let model = try decoder.decode(T.self, from: data)
+            
+            completion(.init(model, headers: response.allHeaderFields))
+        } catch let error as ResponseError {
+            completion(.failure(error))
+        } catch DecodingError.dataCorrupted(_) {
+            completion(.init(.invalidJSON))
+        } catch let DecodingError.keyNotFound(key, _) {
+            completion(.init(.parseError, message: "ey not found : \(key)"))
+        } catch {
+            fatalError("Unhandled error : \(error)")
+        }
+    }
+    
     private func dump(_ text: String) {
         #if DEBUG
             print("[RESTClient] \(text)")
+        #endif
+    }
+    
+    private func dumpAllConfigurationHeaders() {
+        #if DEBUG
+            if let headers = configuration.httpAdditionalHeaders as? [String: String] {
+                dump("Configuration headers : \(headers)")
+            }
+        #endif
+    }
+    
+    private func dump(request: URLRequest, response: URLResponse?) {
+        #if DEBUG
+            self.dump(request: request)
+            if let response = response as? HTTPURLResponse {
+                self.dump(response: response)
+            }
         #endif
     }
     
@@ -146,9 +143,19 @@ public final class RESTClient {
         
         if response.allHeaderFields.count > 0 {
             dump("Headers:")
-            for (header, value) in response.allHeaderFields {
-                dump("\t\t\t\t\(header): \(value)")
-            }
+            response.allHeaderFields.forEach { dump("\t\t\t\t\($0.key): \($0.value)") }
+        }
+    }
+}
+
+extension URLSessionConfiguration {
+    fileprivate func userAgent(using appName: String?) {
+        if let infoDictionary = Bundle.main.infoDictionary,
+            let name = infoDictionary["CFBundleName"] as? String,
+            let version = infoDictionary["CFBundleShortVersionString"] as? String,
+            let build = infoDictionary["CFBundleVersion"] as? String {
+            let userAgent = "\(appName ?? name) v\(version) (\(build))"
+            httpAdditionalHeaders?["User-Agent"] = userAgent
         }
     }
 }

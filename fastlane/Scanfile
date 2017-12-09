@@ -1,0 +1,9 @@
+# iOS template, see monorepo/Templates
+#
+# Version: 1
+
+clean true
+code_coverage true
+skip_slack true
+output_types "html"
+fail_build true
