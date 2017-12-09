@@ -54,6 +54,11 @@ public struct RESTClient {
         // Ensure all our responses are back on the main thread
         let completion = { response in DispatchQueue.main.async { handler(response) }}
         
+        #if os(Linux)
+        // See https://gitlab.com/optimisedlabs/URLSessionRegression
+        let session = URLSession(configuration: .default)
+        #endif
+        
         session.dataTask(with: request) { data, response, error in
             self.dump(request: request, response: response)
             guard !self.errorOccured(error: error, completion: completion) else { return }
