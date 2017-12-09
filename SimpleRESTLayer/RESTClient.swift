@@ -65,23 +65,18 @@ public struct RESTClient {
     
     // MARK: - Private methods
     private func errorOccured<T>(error: Error?, completion: Handler<T>) -> Bool {
-        guard error != nil else { return false }
-        guard let error = error as NSError? else {
-            completion(.init(.unhandled, message: "Expecting NSError"))
+        guard let error = error else { return false }
+        guard let urlError = error as? URLError else {
+            completion(.init(.unhandled, message: error.localizedDescription))
             return true
         }
         
-        switch error.code {
-        case NSURLErrorNotConnectedToInternet, NSURLErrorTimedOut,
-             NSURLErrorCannotConnectToHost where error.domain == NSURLErrorDomain:
+        switch urlError.code {
+        case .notConnectedToInternet, .timedOut, .cannotConnectToHost:
             completion(.init(.connectionError,
                              message: "Check internet connection and try again."))
-            
-        case _ where error.domain == NSURLErrorDomain:
-            completion(.init(.unhandled, message: error.localizedDescription))
-            
         default:
-            dump("Unhandled URLSession Error: \(error.localizedDescription): \(error.userInfo)")
+            dump("Unhandled URLError \(urlError.code), reason: \(error.localizedDescription)")
             completion(.init(.unhandled, message: error.localizedDescription))
         }
         
