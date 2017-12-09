@@ -110,7 +110,7 @@ public struct RESTClient {
         } catch let DecodingError.keyNotFound(key, _) {
             completion(.init(.parseError, message: "ey not found : \(key)"))
         } catch {
-            fatalError("Unhandled error : \(error)")
+            completion(.init(.unhandled, message: "Error parsing: \(error)"))
         }
     }
     
