@@ -16,22 +16,19 @@ class ViewController: UIViewController {
     // MARK: - IBActions
     @IBAction func findIPAddress() {
         API.getIP { [weak self] response in
-            switch response {
-            case .success(let response):
-                self?.handle(ip: response.model)
-            case .failure(let error):
-                self?.handle(error)
+            self?.handle(response) { ip in
+                print("Your IP address is : \(ip.address)")
             }
         }
     }
     
     @IBAction func bounceHeaders() {
         API.getHeaders { [weak self] response in
-            switch response {
-            case .success(let response):
-                self?.handle(headers: response.model)
-            case .failure(let error):
-                self?.handle(error)
+            self?.handle(response) { headers in
+                print("Response headers from httpbin.org:")
+                headers.forEach { key, value in
+                    print("\t\(key): \(value)")
+                }
             }
         }
     }
@@ -44,11 +41,8 @@ class ViewController: UIViewController {
         
         do {
             try API.postJSON(headers) { [weak self] response in
-                switch response {
-                case .success(let response):
-                    self?.handle(json: response.model)
-                case .failure(let error):
-                    self?.handle(error)
+                self?.handle(response) { json in
+                    print("You send the following JSON to httpbin.org: \(json.string)")
                 }
             }
         } catch {
@@ -61,41 +55,25 @@ class ViewController: UIViewController {
             "hello": "world",
             "parameter 2": "😉"
         ]
+        
         API.postFormURLEncoded(parameters) { [weak self] response in
-            switch response {
-            case .success(let response):
-                self?.handle(form: response.model)
-            case .failure(let error):
-                self?.handle(error)
+            self?.handle(response) { form in
+                print("You send the following parameters to httpbin.org using Form URL encoding:")
+                form.parameters.forEach { key, value in
+                    print("\t\(key): \(value)")
+                }
             }
         }
     }
     
     // MARK: - Private methods
-    private func handle(ip: IP) {
-        print("Your IP address is : \(ip.address)")
-    }
-    
-    private func handle(headers: [String: String]) {
-        print("Response headers from httpbin.org:")
-        headers.forEach { key, value in
-            print("\t\(key): \(value)")
+    private func handle<T>(_ response: Response<T>, completion: (T) -> Void) {
+        switch response {
+        case .success(let response):
+            completion(response.model)
+        case .failure(let error):
+            let message = error.message != nil ? " (\(error.message!))" : ""
+            print("An error occured" + message)
         }
-    }
-    
-    private func handle(json: JSONResponse) {
-        print("You send the following JSON to httpbin.org: \(json.string)")
-    }
-    
-    private func handle(form: FormResponse) {
-        print("You send the following parameters to httpbin.org using Form URL encoding:")
-        form.parameters.forEach { key, value in
-            print("\t\(key): \(value)")
-        }
-    }
-    
-    private func handle(_ error: ResponseError) {
-        let message = error.message != nil ? " (\(error.message!))" : ""
-        print("An error occured" + message)
     }
 }
