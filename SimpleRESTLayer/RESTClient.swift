@@ -17,16 +17,30 @@ public struct RESTClient {
     private let configuration: URLSessionConfiguration
     private let session: URLSession
     
-    // MARK: - Initialiser
-    public init(appName: String? = nil, headers: [AnyHashable: Any]? = nil, timeout: TimeInterval = 60) {
-        let configuration: URLSessionConfiguration = .ephemeral
-        configuration.httpAdditionalHeaders = [
+    // MARK: - Structs
+    private struct Constants {
+        static let defaultHeaders = [
             "Accept": "application/json; charset=utf-8",
             "Accept-Encoding": "gzip"
         ]
+    }
+    
+    // MARK: - Initialiser
+    public init(appName: String? = nil, headers: [AnyHashable: Any]? = nil, timeout: TimeInterval = 60) {
+        let configuration: URLSessionConfiguration = .ephemeral
+        configuration.httpAdditionalHeaders = Constants.defaultHeaders
         configuration.userAgent(using: appName)
         headers?.forEach { configuration.httpAdditionalHeaders?[$0.key] = $0.value }
         configuration.timeoutIntervalForRequest = timeout
+        
+        self.configuration = configuration
+        self.session = URLSession(configuration: configuration)
+        
+        dumpAllConfigurationHeaders()
+    }
+    
+    public init(configuration: URLSessionConfiguration) {
+        configuration.httpAdditionalHeaders = Constants.defaultHeaders
         
         self.configuration = configuration
         self.session = URLSession(configuration: configuration)
