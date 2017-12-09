@@ -34,3 +34,7 @@ build:
     - ios
   script:
     - bundle exec fastlane build
+  artifacts:
+    paths:
+      - release/
+    expire_in: 1 day
