@@ -59,15 +59,15 @@ public struct RESTClient {
         let session = URLSession(configuration: .default)
         #endif
         
-        session.dataTask(with: request) { data, response, error in
-            self.dump(request: request, response: response)
+        session.dataTask(with: request) { data, urlResponse, error in
+            self.dump(request, urlResponse)
             
             if let error = error {
                 completion(.failure(error))
                 return
             }
             
-            guard let urlResponse = response as? HTTPURLResponse else {
+            guard let urlResponse = urlResponse as? HTTPURLResponse else {
                 completion(.failure(ResponseError.invalid))
                 return
             }
@@ -114,7 +114,7 @@ public struct RESTClient {
         #endif
     }
     
-    private func dump(request: URLRequest, response: URLResponse?) {
+    private func dump(_ request: URLRequest, _ response: URLResponse?) {
         #if DEBUG
             self.dump(request: request)
             if let response = response as? HTTPURLResponse {
