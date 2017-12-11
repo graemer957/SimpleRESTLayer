@@ -8,6 +8,14 @@
 
 import Foundation
 
+public enum ResponseError: Error {
+    /// HTTP status code was not defined in Response.Status, please raise a PR.
+    case undefinedStatus(Int)
+    
+    /// Server returned unsuccessful HTTP response
+    case unsuccessful(Response)
+}
+
 public struct ResponseErrorOld: Error {
     // MARK: - Enums
     public enum Code: Int {

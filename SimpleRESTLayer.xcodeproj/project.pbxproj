@@ -42,6 +42,7 @@
 		AA7276451FDAFC2900560E94 /* Headers.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7276441FDAFC2900560E94 /* Headers.swift */; };
 		AA7276491FDB2E5600560E94 /* FormResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7276481FDB2E5500560E94 /* FormResponse.swift */; };
 		AA72764B1FDB2E6100560E94 /* JSONResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA72764A1FDB2E6100560E94 /* JSONResponse.swift */; };
+		AADD93811FDEEB2C00BA58B2 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADD93801FDEEB2C00BA58B2 /* Response.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -118,6 +119,7 @@
 		AA7276441FDAFC2900560E94 /* Headers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Headers.swift; sourceTree = "<group>"; };
 		AA7276481FDB2E5500560E94 /* FormResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormResponse.swift; sourceTree = "<group>"; };
 		AA72764A1FDB2E6100560E94 /* JSONResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONResponse.swift; sourceTree = "<group>"; };
+		AADD93801FDEEB2C00BA58B2 /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -250,8 +252,9 @@
 			children = (
 				AA2D8E9A1FDC5D6600216D06 /* RawResponse.swift */,
 				AA24776A1E766115009BD4D4 /* Request.swift */,
-				AA2477701E766282009BD4D4 /* Result.swift */,
+				AADD93801FDEEB2C00BA58B2 /* Response.swift */,
 				AA24776C1E76618B009BD4D4 /* ResponseError.swift */,
+				AA2477701E766282009BD4D4 /* Result.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -518,6 +521,7 @@
 				AA24776B1E766115009BD4D4 /* Request.swift in Sources */,
 				AA2477731E76689C009BD4D4 /* RESTClient.swift in Sources */,
 				AA2D8E9B1FDC5D6600216D06 /* RawResponse.swift in Sources */,
+				AADD93811FDEEB2C00BA58B2 /* Response.swift in Sources */,
 				AA2477711E766282009BD4D4 /* Result.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

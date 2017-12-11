@@ -62,27 +62,31 @@ public struct RESTClient {
         session.dataTask(with: request) { data, response, error in
             self.dump(request: request, response: response)
             guard !self.errorOccured(error: error, completion: completion) else { return }
-            guard let response = response as? HTTPURLResponse else {
+            guard let urlResponse = response as? HTTPURLResponse else {
                 completion(.init(.invalidHTTPResponse))
                 return
             }
             
-            switch response.statusCode {
+            let response: Response
+            do {
+                response = try urlResponse.makeResponse()
+            } catch {
+                completion(.failure(error))
+                return
+            }
+            
+            switch urlResponse.statusCode {
             case 200...204 where T.self == RawResponse.self:
-                self.parse(data: RawResponse.from(data), response: response, completion: completion)
+                self.parse(data: RawResponse.from(data), response: urlResponse, completion: completion)
             case 200...204:
                 guard let data = data else {
                     completion(.init(.noData))
                     return
                 }
-                self.parse(data: data, response: response, completion: completion)
+                self.parse(data: data, response: urlResponse, completion: completion)
             default:
-                let errorCode = ResponseErrorOld.Code(rawValue: response.statusCode) ?? .unhandled
-                if errorCode == .unhandled {
-                    self.dump("Unhandled HTTP response code : \(response.statusCode)")
-                }
-                
-                completion(.init(errorCode))
+                let error = ResponseError.unsuccessful(response)
+                completion(.failure(error))
             }
         }.resume()
     }
@@ -181,5 +185,14 @@ extension URLSessionConfiguration {
             let userAgent = "\(appName ?? name) v\(version) (\(build))"
             httpAdditionalHeaders?["User-Agent"] = userAgent
         }
+    }
+}
+
+extension HTTPURLResponse {
+    fileprivate func makeResponse() throws -> Response {
+        guard let status = Response.Status(rawValue: statusCode) else {
+            throw ResponseError.undefinedStatus(statusCode)
+        }
+        return Response(status, headers: allHeaderFields)
     }
 }
