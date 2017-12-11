@@ -82,8 +82,7 @@ public struct RESTClient {
                     guard let data = data else { throw ResponseError.noData }
                     try self.parse(data: data, response: urlResponse, completion: completion)
                 default:
-                    let error = ResponseError.unsuccessful(response)
-                    completion(.failure(error))
+                    throw ResponseError.unsuccessful(response)
                 }
             } catch {
                 completion(.failure(error))
