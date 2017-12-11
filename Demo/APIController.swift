@@ -48,11 +48,11 @@ final class APIController {
             address: URL.Headers
         )
         request.addHeaders(["custom-header": "your value here"])
-        client.execute(request: request) { (response: Result<Headers>) in
-            switch response {
-            case .success(let response):
-                completion(.success(model: response.model.dictionary, headers: response.headers))
-            case .failure(let error):
+        client.execute(request: request) { (result: Result<Headers>) in
+            switch result {
+            case let .success((response, model)):
+                completion(.success(response, model.dictionary))
+            case let .failure(error):
                 completion(.failure(error))
             }
         }

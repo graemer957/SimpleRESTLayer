@@ -75,10 +75,11 @@ class ViewController: UIViewController {
     }
     
     // MARK: - Private methods
-    private func handle<T>(_ response: Result<T>, completion: (T) -> Void) {
+    private func handle<Model>(_ response: Result<Model>, completion: (Model) -> Void) {
         switch response {
-        case let .success(response):
-            completion(response.model)
+        case let .success((response, model)):
+            print(response)
+            completion(model)
         case let .failure(error):
             print("An error occured: \(error)")
         }

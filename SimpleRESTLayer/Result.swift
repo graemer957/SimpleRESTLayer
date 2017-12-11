@@ -8,15 +8,7 @@
 
 import Foundation
 
-public enum Result<T> {
-    public typealias Headers = [AnyHashable: Any]
-    
-    case success(model: T, headers: Headers?)
+public enum Result<Model> {
+    case success(Response, Model)
     case failure(Error)
-}
-
-extension Result {
-    init(_ model: T, headers: Headers? = nil) {
-        self = .success(model: model, headers: headers)
-    }
 }

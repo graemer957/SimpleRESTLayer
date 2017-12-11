@@ -11,7 +11,7 @@ import Dispatch
 
 public struct RESTClient {
     // MARK: - Typealias
-    public typealias Handler<T> = (Result<T>) -> Void
+    public typealias Handler<Model> = (Result<Model>) -> Void
     
     // MARK: - Properties
     private let configuration: URLSessionConfiguration
@@ -77,10 +77,10 @@ public struct RESTClient {
                 
                 switch urlResponse.statusCode {
                 case 200...204 where T.self == RawResponse.self:
-                    try self.parse(data: RawResponse.from(data), response: urlResponse, completion: completion)
+                    try self.parse(RawResponse.from(data), response: response, completion: completion)
                 case 200...204:
                     guard let data = data else { throw ResponseError.noData }
-                    try self.parse(data: data, response: urlResponse, completion: completion)
+                    try self.parse(data, response: response, completion: completion)
                 default:
                     throw ResponseError.unsuccessful(response)
                 }
@@ -92,11 +92,10 @@ public struct RESTClient {
     }
     
     // MARK: - Private methods
-    private func parse<T: Decodable>(data: Data, response: HTTPURLResponse, completion: Handler<T>) throws {
+    private func parse<T: Decodable>(_ data: Data, response: Response, completion: Handler<T>) throws {
         let decoder = JSONDecoder()
         let model = try decoder.decode(T.self, from: data)
-        
-        completion(.init(model, headers: response.allHeaderFields))
+        completion(.success(response, model))
     }
     
     private func dump(_ text: String) {
