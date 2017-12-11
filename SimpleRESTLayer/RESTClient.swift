@@ -61,7 +61,12 @@ public struct RESTClient {
         
         session.dataTask(with: request) { data, response, error in
             self.dump(request: request, response: response)
-            guard !self.errorOccured(error: error, completion: completion) else { return }
+            
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            
             guard let urlResponse = response as? HTTPURLResponse else {
                 completion(.init(.invalidHTTPResponse))
                 return
@@ -92,25 +97,6 @@ public struct RESTClient {
     }
     
     // MARK: - Private methods
-    private func errorOccured<T>(error: Error?, completion: Handler<T>) -> Bool {
-        guard let error = error else { return false }
-        guard let urlError = error as? URLError else {
-            completion(.init(.unhandled, message: error.localizedDescription))
-            return true
-        }
-        
-        switch urlError.code {
-        case .notConnectedToInternet, .timedOut, .cannotConnectToHost:
-            completion(.init(.connectionError,
-                             message: "Check internet connection and try again."))
-        default:
-            dump("Unhandled URLError \(urlError.code), reason: \(error.localizedDescription)")
-            completion(.init(.unhandled, message: error.localizedDescription))
-        }
-        
-        return true
-    }
-    
     private func parse<T: Decodable>(data: Data, response: HTTPURLResponse, completion: Handler<T>) {
         do {
             let decoder = JSONDecoder()
