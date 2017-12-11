@@ -14,6 +14,9 @@ public enum ResponseError: Error {
     
     /// Server returned unsuccessful HTTP response
     case unsuccessful(Response)
+    
+    /// Response did not contain any data to turn into model
+    case noData
 }
 
 public struct ResponseErrorOld: Error {

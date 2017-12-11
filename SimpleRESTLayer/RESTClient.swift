@@ -72,46 +72,32 @@ public struct RESTClient {
                 return
             }
             
-            let response: Response
             do {
-                response = try urlResponse.makeResponse()
+                let response: Response = try urlResponse.makeResponse()
+                
+                switch urlResponse.statusCode {
+                case 200...204 where T.self == RawResponse.self:
+                    try self.parse(data: RawResponse.from(data), response: urlResponse, completion: completion)
+                case 200...204:
+                    guard let data = data else { throw ResponseError.noData }
+                    try self.parse(data: data, response: urlResponse, completion: completion)
+                default:
+                    let error = ResponseError.unsuccessful(response)
+                    completion(.failure(error))
+                }
             } catch {
                 completion(.failure(error))
                 return
-            }
-            
-            switch urlResponse.statusCode {
-            case 200...204 where T.self == RawResponse.self:
-                self.parse(data: RawResponse.from(data), response: urlResponse, completion: completion)
-            case 200...204:
-                guard let data = data else {
-                    completion(.init(.noData))
-                    return
-                }
-                self.parse(data: data, response: urlResponse, completion: completion)
-            default:
-                let error = ResponseError.unsuccessful(response)
-                completion(.failure(error))
             }
         }.resume()
     }
     
     // MARK: - Private methods
-    private func parse<T: Decodable>(data: Data, response: HTTPURLResponse, completion: Handler<T>) {
-        do {
-            let decoder = JSONDecoder()
-            let model = try decoder.decode(T.self, from: data)
-            
-            completion(.init(model, headers: response.allHeaderFields))
-        } catch let error as ResponseErrorOld {
-            completion(.failure(error))
-        } catch DecodingError.dataCorrupted(_) {
-            completion(.init(.invalidJSON))
-        } catch let DecodingError.keyNotFound(key, _) {
-            completion(.init(.parseError, message: "key not found : \(key)"))
-        } catch {
-            completion(.init(.unhandled, message: "Error parsing: \(error)"))
-        }
+    private func parse<T: Decodable>(data: Data, response: HTTPURLResponse, completion: Handler<T>) throws {
+        let decoder = JSONDecoder()
+        let model = try decoder.decode(T.self, from: data)
+        
+        completion(.init(model, headers: response.allHeaderFields))
     }
     
     private func dump(_ text: String) {
