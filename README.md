@@ -47,6 +47,11 @@ client.execute(request: request) { (response: Response<IP>) in
 - [Foundation](https://developer.apple.com/documentation/foundation/urlsession)
 - [Dispatch](https://developer.apple.com/documentation/dispatch)
 
+## Requirements
+- Swift 4.0+ / Xcode 9.0+
+- iOS 10.0+ / macOS 10.12+ / tvOS 10.0+ / watchOS 3.0+
+- Ubuntu 14.04 / Ubuntu 16.04 / Ubuntu 16.10
+
 ## Installation
 
 ### Swift Package Manager
@@ -59,12 +64,7 @@ In your `Packages.swift` add:
 
 ### Dynamic Framework
 
-Download release zip and add to your Xcode project as an embedded framework. The framework contains slices for armv7 and arm64 (see `ARCHS_STANDARD`).
-
-#### Build environment
-- Xcode 9.2
-- Swift 4.0.3
-- macOS 10.13.2
+Download release zip and add to your Xcode project as an embedded framework. The framework contains slices for armv7 and arm64 (see `ARCHS_STANDARD`). These are always built using the latest version of Xcode / Swift and macOS.
 
 ### Manually
 
