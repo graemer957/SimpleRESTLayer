@@ -12,7 +12,7 @@ public enum Result<T> {
     public typealias Headers = [AnyHashable: Any]
     
     case success(model: T, headers: Headers?)
-    case failure(ResponseErrorOld)
+    case failure(Error)
 }
 
 extension Result {
