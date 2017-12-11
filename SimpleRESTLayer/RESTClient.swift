@@ -77,7 +77,7 @@ public struct RESTClient {
                 }
                 self.parse(data: data, response: response, completion: completion)
             default:
-                let errorCode = ResponseError.Code(rawValue: response.statusCode) ?? .unhandled
+                let errorCode = ResponseErrorOld.Code(rawValue: response.statusCode) ?? .unhandled
                 if errorCode == .unhandled {
                     self.dump("Unhandled HTTP response code : \(response.statusCode)")
                 }
@@ -113,7 +113,7 @@ public struct RESTClient {
             let model = try decoder.decode(T.self, from: data)
             
             completion(.init(model, headers: response.allHeaderFields))
-        } catch let error as ResponseError {
+        } catch let error as ResponseErrorOld {
             completion(.failure(error))
         } catch DecodingError.dataCorrupted(_) {
             completion(.init(.invalidJSON))

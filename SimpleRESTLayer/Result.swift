@@ -12,7 +12,7 @@ public enum Result<T> {
     public typealias Headers = [AnyHashable: Any]
     
     case success(model: T, headers: Headers?)
-    case failure(ResponseError)
+    case failure(ResponseErrorOld)
 }
 
 extension Result {
@@ -20,7 +20,7 @@ extension Result {
         self = .success(model: model, headers: headers)
     }
     
-    init(_ errorCode: ResponseError.Code, message: String? = nil) {
-        self = .failure(ResponseError(code: errorCode, message: message))
+    init(_ errorCode: ResponseErrorOld.Code, message: String? = nil) {
+        self = .failure(ResponseErrorOld(code: errorCode, message: message))
     }
 }

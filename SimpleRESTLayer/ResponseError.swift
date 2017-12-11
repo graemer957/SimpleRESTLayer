@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct ResponseError: Error {
+public struct ResponseErrorOld: Error {
     // MARK: - Enums
     public enum Code: Int {
         /// Unhandled response
@@ -53,7 +53,7 @@ public struct ResponseError: Error {
     public let message: String?
 }
 
-extension ResponseError {
+extension ResponseErrorOld {
     init(_ code: Code) {
         self.code = code
         self.message = nil
