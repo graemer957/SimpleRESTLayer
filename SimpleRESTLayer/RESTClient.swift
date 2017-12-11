@@ -11,7 +11,7 @@ import Dispatch
 
 public struct RESTClient {
     // MARK: - Typealias
-    public typealias Handler<T> = (Response<T>) -> Void
+    public typealias Handler<T> = (Result<T>) -> Void
     
     // MARK: - Properties
     private let configuration: URLSessionConfiguration

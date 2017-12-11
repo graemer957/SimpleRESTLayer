@@ -75,7 +75,7 @@ class ViewController: UIViewController {
     }
     
     // MARK: - Private methods
-    private func handle<T>(_ response: Response<T>, completion: (T) -> Void) {
+    private func handle<T>(_ response: Result<T>, completion: (T) -> Void) {
         switch response {
         case let .success(response):
             completion(response.model)

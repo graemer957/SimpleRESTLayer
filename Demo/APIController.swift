@@ -32,7 +32,7 @@ final class APIController {
     }
     
     // MARK: - Instance methods
-    func getIP(completion: @escaping (Response<IP>) -> Void) {
+    func getIP(completion: @escaping (Result<IP>) -> Void) {
         // See https://httpbin.org/ip
         let request = Request.with(
             method: .get,
@@ -41,14 +41,14 @@ final class APIController {
         client.execute(request: request, handler: completion)
     }
     
-    func getHeaders(completion: @escaping (Response<[String: String]>) -> Void) {
+    func getHeaders(completion: @escaping (Result<[String: String]>) -> Void) {
         // See https://httpbin.org/headers
         var request = Request.with(
             method: .get,
             address: URL.Headers
         )
         request.addHeaders(["custom-header": "your value here"])
-        client.execute(request: request) { (response: Response<Headers>) in
+        client.execute(request: request) { (response: Result<Headers>) in
             switch response {
             case .success(let response):
                 completion(.success(model: response.model.dictionary, headers: response.headers))
@@ -58,7 +58,7 @@ final class APIController {
         }
     }
     
-    func postJSON(_ headers: Headers, completion: @escaping (Response<JSONResponse>) -> Void) throws {
+    func postJSON(_ headers: Headers, completion: @escaping (Result<JSONResponse>) -> Void) throws {
         // See https://httpbin.org
         var request = Request.with(
             method: .post,
@@ -68,7 +68,7 @@ final class APIController {
         client.execute(request: request, handler: completion)
     }
     
-    func postFormURLEncoded(_ parameters: [String: String], completion: @escaping (Response<FormResponse>) -> Void) {
+    func postFormURLEncoded(_ parameters: [String: String], completion: @escaping (Result<FormResponse>) -> Void) {
         // See https://httpbin.org
         var request = Request.with(
             method: .post,
@@ -78,7 +78,7 @@ final class APIController {
         client.execute(request: request, handler: completion)
     }
     
-    func getData(bytes: Int, completion: @escaping (Response<RawResponse>) -> Void) {
+    func getData(bytes: Int, completion: @escaping (Result<RawResponse>) -> Void) {
         // See https://httpbin.org
         let request = Request.with(
             method: .get,

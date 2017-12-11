@@ -1,5 +1,5 @@
 //
-//  Response.swift
+//  Result.swift
 //  SimpleRESTLayer
 //
 //  Created by Graeme Read on 13/03/2017.
@@ -8,14 +8,14 @@
 
 import Foundation
 
-public enum Response<T> {
+public enum Result<T> {
     public typealias Headers = [AnyHashable: Any]
     
     case success(model: T, headers: Headers?)
     case failure(ResponseError)
 }
 
-extension Response {
+extension Result {
     init(_ model: T, headers: Headers? = nil) {
         self = .success(model: model, headers: headers)
     }
