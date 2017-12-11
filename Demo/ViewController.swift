@@ -79,9 +79,6 @@ class ViewController: UIViewController {
         switch response {
         case let .success(response):
             completion(response.model)
-        case let .failure(error as ResponseErrorOld):
-            let message = error.message != nil ? " (\(error.message!))" : ""
-            print("An error occured" + message)
         case let .failure(error):
             print("An error occured: \(error)")
         }

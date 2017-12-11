@@ -68,7 +68,7 @@ public struct RESTClient {
             }
             
             guard let urlResponse = response as? HTTPURLResponse else {
-                completion(.init(.invalidHTTPResponse))
+                completion(.failure(ResponseError.invalid))
                 return
             }
             

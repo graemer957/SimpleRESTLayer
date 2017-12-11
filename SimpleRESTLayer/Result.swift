@@ -19,8 +19,4 @@ extension Result {
     init(_ model: T, headers: Headers? = nil) {
         self = .success(model: model, headers: headers)
     }
-    
-    init(_ errorCode: ResponseErrorOld.Code, message: String? = nil) {
-        self = .failure(ResponseErrorOld(code: errorCode, message: message))
-    }
 }
