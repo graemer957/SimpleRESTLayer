@@ -59,8 +59,10 @@ client.execute(request: request) { (response: Response<IP>) in
 In your `Packages.swift` add:
 
 ```swift
-.package(url: "https://gitlab.com/optimisedlabs/simplerestlayer.git", .from: "0.4.0")
+.package(url: "https://gitlab.com/optimisedlabs/simplerestlayer.git", .from: "0.5.0")
 ```
+
+*NOTE*: `.upToNextMinor(from: "0.5.0")` might be better whilst the API stablises.
 
 ### Dynamic Framework
 
