@@ -63,15 +63,13 @@ public struct RESTClient {
             do {
                 if let error = error { throw error }
                 
-                // As per the documentation, the request has not errored so this will be some, even if zero bytes
-                let data = data!
-                
                 guard let urlResponse = urlResponse as? HTTPURLResponse else { throw ResponseError.invalid }
                 let response: Response = try urlResponse.makeResponse()
                 
                 guard response.status.isSuccessful() else { throw ResponseError.unsuccessful(response) }
                 
-                let model = try self.decode(data, using: decoder) as T
+                // As per the documentation, the request has not errored so this will be some, even if zero bytes
+                let model = try data!.decode(T.self, using: decoder)
                 self.queue.async { handler(.success(response, model)) }
             } catch {
                 self.queue.async { handler(.failure(error)) }
@@ -80,16 +78,6 @@ public struct RESTClient {
     }
     
     // MARK: - Private methods
-    private func decode<T: Decodable>(_ data: Data, using decoder: JSONDecoder) throws -> T {
-        let model: T
-        if let dataModel = data as? T {
-            model = dataModel
-        } else {
-            model = try decoder.decode(T.self, from: data)
-        }
-        return model
-    }
-    
     private func dump(_ text: String) {
         #if DEBUG
             print("[RESTClient] \(text)")
