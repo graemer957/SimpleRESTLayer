@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum Result<Model> {
+public enum Result<Model: Decodable> {
     case success(Response, Model)
     case failure(Error)
     

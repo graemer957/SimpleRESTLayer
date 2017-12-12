@@ -49,9 +49,9 @@ public struct RESTClient {
     }
     
     // MARK: - Instance methods
-    public func execute<T: Decodable>(request: URLRequest,
-                                      with decoder: JSONDecoder = JSONDecoder(),
-                                      handler: @escaping (Result<T>) -> Void) {
+    public func execute<T>(request: URLRequest,
+                           with decoder: JSONDecoder = JSONDecoder(),
+                           handler: @escaping (Result<T>) -> Void) {
         #if os(Linux)
         // See https://gitlab.com/optimisedlabs/URLSessionRegression
         let session = URLSession(configuration: .default)
