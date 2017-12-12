@@ -10,9 +10,6 @@ import Foundation
 import Dispatch
 
 public struct RESTClient {
-    // MARK: - Typealias
-    public typealias Handler<Model> = (Result<Model>) -> Void
-    
     // MARK: - Properties
     private let configuration: URLSessionConfiguration
     private let session: URLSession
@@ -57,7 +54,7 @@ public struct RESTClient {
     // MARK: - Instance methods
     public func execute<Model: Decodable>(request: URLRequest,
                                           with decoder: JSONDecoder = JSONDecoder(),
-                                          handler: @escaping Handler<Model>) {
+                                          handler: @escaping (Result<Model>) -> Void) {
         #if os(Linux)
         // See https://gitlab.com/optimisedlabs/URLSessionRegression
         let session = URLSession(configuration: .default)
