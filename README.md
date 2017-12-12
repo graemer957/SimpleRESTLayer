@@ -81,6 +81,14 @@ Copy the Swift files from `SimpleRESTLayer` into your project.
 - [x] Add codebeat.co
 - [x] Add support for Swift Package Manager
 
+## Acknowledgements and thanks
+
+The ideas and inspiration for this framework have been sourced from a number of different sources over the years. Whilst this is by no means an exhaustive list, I would like to thank:
+- [Apple](https://developer.apple.com), standing on the shoulders of giants...
+- [Cocoa with Love](https://www.cocoawithlove.com/blog) blog for various great articles and ideas over the years, not least of all the `Result` type
+- [codebeat](https://codebeat.co) for plenty of suggestions on where to focus to improve code quality
+- More to come...
+
 ## License
 
 SimpleRESTLayer is released under the Apache 2.0 license. See [LICENSE](https://github.com/graemer957/helloworld-swift-framework/blob/master/LICENSE) for details.
