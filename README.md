@@ -73,7 +73,8 @@ Copy the Swift files from `SimpleRESTLayer` into your project.
 
 ## TODO
 - [x] Add support for fastlane
-- [ ] Add unit tests with codecov.io (or similar)
+- [ ] Add unit tests
+- [ ] Add code coverage with [codecov.io](https://github.com/codecov/example-swift)
 - [x] Add SwiftLint
 - [ ] Add support for Carthage
 - [ ] Add support for CocoaPods
