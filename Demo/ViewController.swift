@@ -67,10 +67,16 @@ class ViewController: UIViewController {
     }
     
     @IBAction func getData() {
-        API.getData(bytes: 0) { [weak self] response in
-            self?.handle(response) { rawResponse in
-                print("httpbin.org returned \(rawResponse.count) bytes of data")
+        API.getData(bytes: 957) { [weak self] response in
+            self?.handle(response) { data in
+                print("httpbin.org returned \(data.count) bytes of data")
             }
+        }
+    }
+    
+    @IBAction func getSpecificHTTPStatus() {
+        API.getStatus(status: 202) { [weak self] response in
+            self?.handle(response) { _ = $0 }
         }
     }
     

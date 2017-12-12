@@ -29,6 +29,10 @@ final class APIController {
         static func Data(bytes: Int) -> String {
             return baseAddress + "bytes/\(bytes)"
         }
+        
+        static func Status(_ status: Int) -> String {
+            return baseAddress + "status/\(status)"
+        }
     }
     
     // MARK: - Instance methods
@@ -83,6 +87,15 @@ final class APIController {
         let request = Request.with(
             method: .get,
             address: URL.Data(bytes: bytes)
+        )
+        client.execute(request: request, handler: completion)
+    }
+    
+    func getStatus(status: Int, completion: @escaping (Result<Data>) -> Void) {
+        // See https://httpbin.org
+        let request = Request.with(
+            method: .get,
+            address: URL.Status(status)
         )
         client.execute(request: request, handler: completion)
     }
