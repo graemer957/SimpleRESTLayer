@@ -84,13 +84,13 @@ public struct Response {
 
 extension Response: CustomStringConvertible {
     public var description: String {
-        return "Status: .\(status)"
+        return "status: .\(status)"
     }
 }
 
 extension Response: CustomDebugStringConvertible {
     public var debugDescription: String {
-        return "Status: .\(status), headers: \(headers.map { "\($0): \($1)" })"
+        return "status: .\(status), headers: \(headers.map { "\($0): \($1)" })"
     }
 }
 
