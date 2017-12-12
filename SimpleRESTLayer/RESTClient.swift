@@ -50,6 +50,7 @@ public struct RESTClient {
     
     // MARK: - Instance methods
     public func execute<Model: Decodable>(request: URLRequest,
+                                          with decoder: JSONDecoder = JSONDecoder(),
                                           handler: @escaping Handler<Model>) {
         // Ensure all our responses are back on the main thread
         let completion = { response in DispatchQueue.main.async { handler(response) }}
@@ -83,7 +84,8 @@ public struct RESTClient {
                         data = RawResponse.from(data)
                     }
                     
-                    try self.parse(data, response: response, completion: completion)
+                    let model = try decoder.decode(Model.self, from: data)
+                    completion(.success(response, model))
                 } else {
                     throw ResponseError.unsuccessful(response)
                 }
@@ -95,12 +97,6 @@ public struct RESTClient {
     }
     
     // MARK: - Private methods
-    private func parse<Model: Decodable>(_ data: Data, response: Response, completion: Handler<Model>) throws {
-        let decoder = JSONDecoder()
-        let model = try decoder.decode(Model.self, from: data)
-        completion(.success(response, model))
-    }
-    
     private func dump(_ text: String) {
         #if DEBUG
             print("[RESTClient] \(text)")
