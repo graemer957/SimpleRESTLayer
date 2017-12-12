@@ -63,35 +63,24 @@ public struct RESTClient {
         session.dataTask(with: request) { data, urlResponse, error in
             self.dump(request, urlResponse)
             
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
-            
-            // As per the documentation, the request has not errored so this will be set, even if zero bytes
-            var data = data!
-            
-            guard let urlResponse = urlResponse as? HTTPURLResponse else {
-                completion(.failure(ResponseError.invalid))
-                return
-            }
-            
             do {
+                if let error = error { throw error }
+                
+                // As per the documentation, the request has not errored so this will be set, even if zero bytes
+                var data = data!
+                
+                guard let urlResponse = urlResponse as? HTTPURLResponse else { throw ResponseError.invalid }
                 let response: Response = try urlResponse.makeResponse()
                 
-                if response.status.isSuccessful() {
-                    if Model.self == RawResponse.self {
-                        data = RawResponse.from(data)
-                    }
-                    
-                    let model = try decoder.decode(Model.self, from: data)
-                    completion(.success(response, model))
-                } else {
-                    throw ResponseError.unsuccessful(response)
+                guard response.status.isSuccessful() else { throw ResponseError.unsuccessful(response) }
+                if Model.self == RawResponse.self {
+                    data = RawResponse.from(data)
                 }
+                
+                let model = try decoder.decode(Model.self, from: data)
+                completion(.success(response, model))
             } catch {
                 completion(.failure(error))
-                return
             }
         }.resume()
     }
