@@ -18,8 +18,8 @@ public struct Request {
     }
     
     // MARK: - Methods
-    public static func with(method: HTTPMethod,
-                            address: String,
+    public static func with(_ address: String,
+                            method: HTTPMethod = .get,
                             parameters: [String: String]? = nil) -> URLRequest {
         guard var urlComponents = URLComponents(string: address) else {
             preconditionFailure("Could not build URLComponents from address")
