@@ -52,9 +52,9 @@ public struct RESTClient {
     }
     
     // MARK: - Instance methods
-    public func execute<Model: Decodable>(request: URLRequest,
-                                          with decoder: JSONDecoder = JSONDecoder(),
-                                          handler: @escaping (Result<Model>) -> Void) {
+    public func execute<T: Decodable>(request: URLRequest,
+                                      with decoder: JSONDecoder = JSONDecoder(),
+                                      handler: @escaping (Result<T>) -> Void) {
         #if os(Linux)
         // See https://gitlab.com/optimisedlabs/URLSessionRegression
         let session = URLSession(configuration: .default)
@@ -74,12 +74,7 @@ public struct RESTClient {
                 
                 guard response.status.isSuccessful() else { throw ResponseError.unsuccessful(response) }
                 
-                let model: Model
-                if let dataModel = data as? Model {
-                    model = dataModel
-                } else {
-                    model = try decoder.decode(Model.self, from: data)
-                }
+                let model = try self.decode(data, using: decoder) as T
                 self.queue.async { handler(.success(response, model)) }
             } catch {
                 self.queue.async { handler(.failure(error)) }
@@ -88,6 +83,16 @@ public struct RESTClient {
     }
     
     // MARK: - Private methods
+    private func decode<T: Decodable>(_ data: Data, using decoder: JSONDecoder) throws -> T {
+        let model: T
+        if let dataModel = data as? T {
+            model = dataModel
+        } else {
+            model = try decoder.decode(T.self, from: data)
+        }
+        return model
+    }
+    
     private func dump(_ text: String) {
         #if DEBUG
             print("[RESTClient] \(text)")
