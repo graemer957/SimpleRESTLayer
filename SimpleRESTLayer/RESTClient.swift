@@ -16,6 +16,7 @@ public struct RESTClient {
     // MARK: - Properties
     private let configuration: URLSessionConfiguration
     private let session: URLSession
+    private let queue: DispatchQueue
     
     // MARK: - Structs
     private struct Constants {
@@ -26,7 +27,10 @@ public struct RESTClient {
     }
     
     // MARK: - Initialiser
-    public init(appName: String? = nil, headers: [AnyHashable: Any]? = nil, timeout: TimeInterval = 60) {
+    public init(appName: String? = nil,
+                headers: [AnyHashable: Any]? = nil,
+                timeout: TimeInterval = 60,
+                queue: DispatchQueue = .main) {
         let configuration: URLSessionConfiguration = .ephemeral
         configuration.httpAdditionalHeaders = Constants.defaultHeaders
         configuration.userAgent(using: appName)
@@ -35,15 +39,17 @@ public struct RESTClient {
         
         self.configuration = configuration
         self.session = URLSession(configuration: configuration)
+        self.queue = queue
         
         dumpAllConfigurationHeaders()
     }
     
-    public init(configuration: URLSessionConfiguration) {
+    public init(configuration: URLSessionConfiguration, queue: DispatchQueue = .main) {
         configuration.httpAdditionalHeaders = Constants.defaultHeaders
         
         self.configuration = configuration
         self.session = URLSession(configuration: configuration)
+        self.queue = queue
         
         dumpAllConfigurationHeaders()
     }
@@ -52,9 +58,6 @@ public struct RESTClient {
     public func execute<Model: Decodable>(request: URLRequest,
                                           with decoder: JSONDecoder = JSONDecoder(),
                                           handler: @escaping Handler<Model>) {
-        // Ensure all our responses are back on the main thread
-        let completion = { response in DispatchQueue.main.async { handler(response) }}
-        
         #if os(Linux)
         // See https://gitlab.com/optimisedlabs/URLSessionRegression
         let session = URLSession(configuration: .default)
@@ -78,9 +81,9 @@ public struct RESTClient {
                 }
                 
                 let model = try decoder.decode(Model.self, from: data)
-                completion(.success(response, model))
+                self.queue.async { handler(.success(response, model)) }
             } catch {
-                completion(.failure(error))
+                self.queue.async { handler(.failure(error)) }
             }
         }.resume()
     }
