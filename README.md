@@ -31,13 +31,12 @@ struct IP: Codable {
 import SimpleRESTLayer
 let client = RESTClient()
 
-let request = Request.with(method: .get, address: "https://httpbin.org/ip")
-client.execute(request: request) { (response: Response<IP>) in
-    switch response {
-    case let .success(response):
-        print("Your IP address is : \(response.model.address)")
-        
-    case let .failure(error):
+let request = Request.with("https://httpbin.org/ip")
+client.execute(request: request) { (result: Result<IP>) in
+    do {
+        let (response, model) = try result.unwrap()
+        print("Response was \(response) and your IP address is \(model.address)")
+    } catch {
         print("Error: \(error)")
     }
 }
