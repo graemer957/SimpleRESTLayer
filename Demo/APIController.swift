@@ -14,22 +14,14 @@ final class APIController {
     let client = RESTClient()
     
     // MARK: - Structs
-    fileprivate struct URL {
+    private struct URL {
         private static let baseAddress = "https://httpbin.org/"
-        
-        /// Returns the IP that the request came in from
-        // swiftlint:disable identifier_name
         static let IP = baseAddress + "ip"
-        // swiftlint:enable identifier_name
-        
         static let Headers = baseAddress + "headers"
-        
         static let Post = baseAddress + "post"
-        
         static func Data(bytes: Int) -> String {
             return baseAddress + "bytes/\(bytes)"
         }
-        
         static func Status(_ status: Int) -> String {
             return baseAddress + "status/\(status)"
         }
