@@ -15,16 +15,16 @@ class ViewController: UIViewController {
     
     // MARK: - IBActions
     @IBAction func findIPAddress() {
-        API.getIP { [weak self] response in
-            self?.handle(response) { ip in
+        API.getIP { [weak self] result in
+            self?.handle(result) { ip in
                 print("Your IP address is : \(ip.address)")
             }
         }
     }
     
     @IBAction func bounceHeaders() {
-        API.getHeaders { [weak self] response in
-            self?.handle(response) { headers in
+        API.getHeaders { [weak self] result in
+            self?.handle(result) { headers in
                 print("Response headers from httpbin.org:")
                 headers.forEach { key, value in
                     print("\t\(key): \(value)")
@@ -40,8 +40,8 @@ class ViewController: UIViewController {
             ])
         
         do {
-            try API.postJSON(headers) { [weak self] response in
-                self?.handle(response) { json in
+            try API.postJSON(headers) { [weak self] result in
+                self?.handle(result) { json in
                     print("You send the following JSON to httpbin.org: \(json.string)")
                 }
             }
@@ -56,8 +56,8 @@ class ViewController: UIViewController {
             "parameter 2": "😉"
         ]
         
-        API.postFormURLEncoded(parameters) { [weak self] response in
-            self?.handle(response) { form in
+        API.postFormURLEncoded(parameters) { [weak self] result in
+            self?.handle(result) { form in
                 print("You send the following parameters to httpbin.org using Form URL encoding:")
                 form.parameters.forEach { key, value in
                     print("\t\(key): \(value)")
@@ -67,8 +67,8 @@ class ViewController: UIViewController {
     }
     
     @IBAction func getData() {
-        API.getData(bytes: 957) { [weak self] response in
-            self?.handle(response) { data in
+        API.getData(bytes: 957) { [weak self] result in
+            self?.handle(result) { data in
                 print("httpbin.org returned \(data.count) bytes of data")
             }
         }
