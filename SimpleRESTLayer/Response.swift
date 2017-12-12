@@ -93,3 +93,9 @@ extension Response: CustomDebugStringConvertible {
         return "Status: .\(status), headers: \(headers.map { "\($0): \($1)" })"
     }
 }
+
+extension Response.Status {
+    func isSuccessful() -> Bool {
+        return [.ok, .created, .accepted, .noContent, .partialContent].contains(self)
+    }
+}

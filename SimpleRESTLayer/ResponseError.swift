@@ -9,15 +9,12 @@
 import Foundation
 
 public enum ResponseError: Error {
+    /// Response is not an HTTP response
+    case invalid
+    
     /// HTTP status code was not defined in Response.Status, please raise a PR.
     case undefinedStatus(Int)
     
     /// Server returned an unsuccessful HTTP response
     case unsuccessful(Response)
-    
-    /// Response did not contain any data to turn into model
-    case noData
-    
-    /// Response is not an HTTP response
-    case invalid
 }
