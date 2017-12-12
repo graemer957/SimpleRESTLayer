@@ -3,7 +3,7 @@
 //  SimpleRESTLayer
 //
 //  Created by Graeme Read on 14/08/2017.
-//  Copyright © 2017 Graeme Read. All rights reserved.
+//  Copyright © 2017 Optimised Labs Ltd. All rights reserved.
 //
 
 import Foundation

@@ -3,7 +3,7 @@
 //  Demo
 //
 //  Created by Graeme Read on 11/03/2017.
-//  Copyright © 2017 Graeme Read. All rights reserved.
+//  Copyright © 2017 Optimised Labs Ltd. All rights reserved.
 //
 
 import UIKit
