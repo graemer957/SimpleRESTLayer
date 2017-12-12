@@ -69,7 +69,7 @@ class ViewController: UIViewController {
     @IBAction func getData() {
         API.getData(bytes: 0) { [weak self] response in
             self?.handle(response) { rawResponse in
-                print("httpbin.org returned \(rawResponse.data?.count ?? 0) bytes of data")
+                print("httpbin.org returned \(rawResponse.count) bytes of data")
             }
         }
     }

@@ -67,17 +67,19 @@ public struct RESTClient {
                 if let error = error { throw error }
                 
                 // As per the documentation, the request has not errored so this will be set, even if zero bytes
-                var data = data!
+                let data = data!
                 
                 guard let urlResponse = urlResponse as? HTTPURLResponse else { throw ResponseError.invalid }
                 let response: Response = try urlResponse.makeResponse()
                 
                 guard response.status.isSuccessful() else { throw ResponseError.unsuccessful(response) }
-                if Model.self == RawResponse.self {
-                    data = RawResponse.from(data)
-                }
                 
-                let model = try decoder.decode(Model.self, from: data)
+                let model: Model
+                if let dataModel = data as? Model {
+                    model = dataModel
+                } else {
+                    model = try decoder.decode(Model.self, from: data)
+                }
                 self.queue.async { handler(.success(response, model)) }
             } catch {
                 self.queue.async { handler(.failure(error)) }

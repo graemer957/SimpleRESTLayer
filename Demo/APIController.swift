@@ -78,7 +78,7 @@ final class APIController {
         client.execute(request: request, handler: completion)
     }
     
-    func getData(bytes: Int, completion: @escaping (Result<RawResponse>) -> Void) {
+    func getData(bytes: Int, completion: @escaping (Result<Data>) -> Void) {
         // See https://httpbin.org
         let request = Request.with(
             method: .get,
