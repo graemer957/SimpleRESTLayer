@@ -13,7 +13,7 @@ public struct RESTClient {
     // MARK: - Properties
     private let configuration: URLSessionConfiguration
     private let session: URLSession
-    private let queue: DispatchQueue
+    var queue: DispatchQueue = .main
     
     // MARK: - Structs
     private struct Constants {
@@ -26,8 +26,7 @@ public struct RESTClient {
     // MARK: - Initialiser
     public init(appName: String? = nil,
                 headers: [AnyHashable: Any]? = nil,
-                timeout: TimeInterval = 60,
-                queue: DispatchQueue = .main) {
+                timeout: TimeInterval = 60) {
         let configuration: URLSessionConfiguration = .ephemeral
         configuration.httpAdditionalHeaders = Constants.defaultHeaders
         configuration.userAgent(using: appName)
@@ -36,17 +35,15 @@ public struct RESTClient {
         
         self.configuration = configuration
         self.session = URLSession(configuration: configuration)
-        self.queue = queue
         
         dumpAllConfigurationHeaders()
     }
     
-    public init(configuration: URLSessionConfiguration, queue: DispatchQueue = .main) {
+    public init(configuration: URLSessionConfiguration) {
         configuration.httpAdditionalHeaders = Constants.defaultHeaders
         
         self.configuration = configuration
         self.session = URLSession(configuration: configuration)
-        self.queue = queue
         
         dumpAllConfigurationHeaders()
     }
