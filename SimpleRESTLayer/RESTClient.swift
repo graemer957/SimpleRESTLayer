@@ -63,8 +63,8 @@ public struct RESTClient {
             do {
                 if let error = error { throw error }
                 
-                guard let urlResponse = urlResponse as? HTTPURLResponse else { throw ResponseError.invalid }
-                let response: Response = try urlResponse.makeResponse()
+                guard let httpResponse = urlResponse as? HTTPURLResponse else { throw ResponseError.invalid }
+                let response = try httpResponse.makeResponse()
                 
                 guard response.status.isSuccessful() else { throw ResponseError.unsuccessful(response) }
                 
