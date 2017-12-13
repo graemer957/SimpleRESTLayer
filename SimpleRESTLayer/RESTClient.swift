@@ -49,7 +49,7 @@ public struct RESTClient {
     }
     
     // MARK: - Instance methods
-    public func execute<T>(request: URLRequest,
+    public func execute<T>(_ request: URLRequest,
                            with decoder: JSONDecoder = JSONDecoder(),
                            handler: @escaping (Result<T>) -> Void) {
         #if os(Linux)

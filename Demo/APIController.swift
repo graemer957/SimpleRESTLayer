@@ -31,14 +31,14 @@ final class APIController {
     func getIP(completion: @escaping (Result<IP>) -> Void) {
         // See https://httpbin.org/ip
         let request = Request.with(URL.IP)
-        client.execute(request: request, handler: completion)
+        client.execute(request, handler: completion)
     }
     
     func getHeaders(completion: @escaping (Result<[String: String]>) -> Void) {
         // See https://httpbin.org/headers
         var request = Request.with(URL.Headers)
         request.addHeaders(["custom-header": "your value here"])
-        client.execute(request: request) { (result: Result<Headers>) in
+        client.execute(request) { (result: Result<Headers>) in
             switch result {
             case let .success((response, model)):
                 completion(.success(response, model.dictionary))
@@ -52,25 +52,25 @@ final class APIController {
         // See https://httpbin.org
         var request = Request.with(URL.Post, method: .post)
         try request.addJSONBody(headers)
-        client.execute(request: request, handler: completion)
+        client.execute(request, handler: completion)
     }
     
     func postFormURLEncoded(_ parameters: [String: String], completion: @escaping (Result<FormResponse>) -> Void) {
         // See https://httpbin.org
         var request = Request.with(URL.Post, method: .post)
         request.addFormURLEncodedBody(parameters)
-        client.execute(request: request, handler: completion)
+        client.execute(request, handler: completion)
     }
     
     func getData(bytes: Int, completion: @escaping (Result<Data>) -> Void) {
         // See https://httpbin.org
         let request = Request.with(URL.Data(bytes: bytes))
-        client.execute(request: request, handler: completion)
+        client.execute(request, handler: completion)
     }
     
     func getStatus(status: Int, completion: @escaping (Result<Data>) -> Void) {
         // See https://httpbin.org
         let request = Request.with(URL.Status(status))
-        client.execute(request: request, handler: completion)
+        client.execute(request, handler: completion)
     }
 }
