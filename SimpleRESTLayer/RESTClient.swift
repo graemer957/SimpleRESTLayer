@@ -54,7 +54,7 @@ public struct RESTClient {
                            completionHandler: @escaping (Result<T>) -> Void) {
         #if os(Linux)
         // See https://gitlab.com/optimisedlabs/URLSessionRegression
-        let session = URLSession(configuration: .default)
+        let session = URLSession(configuration: configuration)
         #endif
         
         session.dataTask(with: request) { data, urlResponse, error in
