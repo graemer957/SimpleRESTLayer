@@ -20,12 +20,12 @@ public struct Request {
     // MARK: - Methods
     public static func with(_ address: String,
                             method: HTTPMethod = .get,
-                            parameters: [String: String]? = nil) -> URLRequest {
+                            urlParameters: [String: String]? = nil) -> URLRequest {
         guard var urlComponents = URLComponents(string: address) else {
             preconditionFailure("Could not build URLComponents from address")
         }
-        if let parameters = parameters {
-            urlComponents.setQueryItems(from: parameters)
+        if let urlParameters = urlParameters {
+            urlComponents.setQueryItems(from: urlParameters)
         }
         guard let URL = urlComponents.url else { preconditionFailure("Could not get .url from URLComponents") }
         
