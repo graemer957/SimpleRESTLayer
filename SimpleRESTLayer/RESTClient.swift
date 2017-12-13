@@ -93,9 +93,9 @@ public struct RESTClient {
     
     private func dump(_ request: URLRequest, _ response: URLResponse?) {
         #if DEBUG
-            self.dump(request: request)
+            dump(request: request)
             if let response = response as? HTTPURLResponse {
-                self.dump(response: response)
+                dump(response: response)
             }
         #endif
     }
