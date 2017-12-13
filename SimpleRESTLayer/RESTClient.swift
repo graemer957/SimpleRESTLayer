@@ -66,9 +66,8 @@ public struct RESTClient {
                 guard let httpResponse = urlResponse as? HTTPURLResponse else { throw ResponseError.invalid }
                 let response = try httpResponse.makeResponse()
                 
-                guard response.status.isSuccessful() else { throw ResponseError.unsuccessful(response) }
-                
-                // As per the documentation, the request has not errored so this will be some, even if zero bytes
+                // As per the documentation, the request has not errored so `data` will be some, even if zero bytes
+                guard response.status.isSuccessful() else { throw ResponseError.unsuccessful(response, data!) }
                 let model = try data!.decode(T.self, using: decoder)
                 self.queue.async { handler(.success(response, model)) }
             } catch {

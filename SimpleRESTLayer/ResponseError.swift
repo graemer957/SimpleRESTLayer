@@ -16,5 +16,5 @@ public enum ResponseError: Error {
     case undefinedStatus(Int)
     
     /// Server returned an unsuccessful HTTP response
-    case unsuccessful(Response)
+    case unsuccessful(Response, Data)
 }
