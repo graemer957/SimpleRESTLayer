@@ -51,8 +51,7 @@ public extension URLRequest {
         }
     }
     
-    public mutating func addJSONBody<T: Encodable>(_ body: T) throws {
-        let encoder = JSONEncoder()
+    public mutating func addJSONBody<T: Encodable>(_ body: T, with encoder: JSONEncoder = JSONEncoder()) throws {
         let data = try encoder.encode(body)
         addValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
         httpBody = data
