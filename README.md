@@ -32,10 +32,10 @@ import SimpleRESTLayer
 let client = RESTClient()
 
 let request = Request.with("https://httpbin.org/ip")
-client.execute(request: request) { (result: Result<IP>) in
+client.execute(request) { (result: Result<IP>) in
     do {
-        let (response, model) = try result.unwrap()
-        print("Response was \(response) and your IP address is \(model.address)")
+        let (response, ip) = try result.unwrap()
+        print("Response was \(response) and your IP address is \(ip.address)")
     } catch {
         print("Error: \(error)")
     }
