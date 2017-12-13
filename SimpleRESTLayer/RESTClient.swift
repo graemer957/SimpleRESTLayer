@@ -51,7 +51,7 @@ public struct RESTClient {
     // MARK: - Instance methods
     public func execute<T>(_ request: URLRequest,
                            with decoder: JSONDecoder = JSONDecoder(),
-                           handler: @escaping (Result<T>) -> Void) {
+                           completionHandler: @escaping (Result<T>) -> Void) {
         #if os(Linux)
         // See https://gitlab.com/optimisedlabs/URLSessionRegression
         let session = URLSession(configuration: .default)
@@ -69,9 +69,9 @@ public struct RESTClient {
                 // As per the documentation, the request has not errored so `data` will be some, even if zero bytes
                 guard response.status.isSuccessful() else { throw ResponseError.unsuccessful(response, data!) }
                 let model = try data!.decode(T.self, using: decoder)
-                self.queue.async { handler(.success(response, model)) }
+                self.queue.async { completionHandler(.success(response, model)) }
             } catch {
-                self.queue.async { handler(.failure(error)) }
+                self.queue.async { completionHandler(.failure(error)) }
             }
         }.resume()
     }

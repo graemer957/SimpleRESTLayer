@@ -28,49 +28,50 @@ final class APIController {
     }
     
     // MARK: - Instance methods
-    func getIP(completion: @escaping (Result<IP>) -> Void) {
+    func getIP(completionHandler: @escaping (Result<IP>) -> Void) {
         // See https://httpbin.org/ip
         let request = Request.with(URL.IP)
-        client.execute(request, handler: completion)
+        client.execute(request, completionHandler: completionHandler)
     }
     
-    func getHeaders(completion: @escaping (Result<[String: String]>) -> Void) {
+    func getHeaders(completionHandler: @escaping (Result<[String: String]>) -> Void) {
         // See https://httpbin.org/headers
         var request = Request.with(URL.Headers)
         request.addHeaders(["custom-header": "your value here"])
         client.execute(request) { (result: Result<Headers>) in
             switch result {
             case let .success((response, model)):
-                completion(.success(response, model.dictionary))
+                completionHandler(.success(response, model.dictionary))
             case let .failure(error):
-                completion(.failure(error))
+                completionHandler(.failure(error))
             }
         }
     }
     
-    func postJSON(_ headers: Headers, completion: @escaping (Result<JSONResponse>) -> Void) throws {
+    func postJSON(_ headers: Headers, completionHandler: @escaping (Result<JSONResponse>) -> Void) throws {
         // See https://httpbin.org
         var request = Request.with(URL.Post, method: .post)
         try request.addJSONBody(headers)
-        client.execute(request, handler: completion)
+        client.execute(request, completionHandler: completionHandler)
     }
     
-    func postFormURLEncoded(_ parameters: [String: String], completion: @escaping (Result<FormResponse>) -> Void) {
+    func postFormURLEncoded(_ parameters: [String: String],
+                            completionHandler: @escaping (Result<FormResponse>) -> Void) {
         // See https://httpbin.org
         var request = Request.with(URL.Post, method: .post)
         request.addFormURLEncodedBody(parameters)
-        client.execute(request, handler: completion)
+        client.execute(request, completionHandler: completionHandler)
     }
     
-    func getData(bytes: Int, completion: @escaping (Result<Data>) -> Void) {
+    func getData(bytes: Int, completionHandler: @escaping (Result<Data>) -> Void) {
         // See https://httpbin.org
         let request = Request.with(URL.Data(bytes: bytes))
-        client.execute(request, handler: completion)
+        client.execute(request, completionHandler: completionHandler)
     }
     
-    func getStatus(status: Int, completion: @escaping (Result<Data>) -> Void) {
+    func getStatus(status: Int, completionHandler: @escaping (Result<Data>) -> Void) {
         // See https://httpbin.org
         let request = Request.with(URL.Status(status))
-        client.execute(request, handler: completion)
+        client.execute(request, completionHandler: completionHandler)
     }
 }
