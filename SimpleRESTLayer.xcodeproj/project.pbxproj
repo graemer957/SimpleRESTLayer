@@ -42,7 +42,6 @@
 		AA7276491FDB2E5600560E94 /* FormResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7276481FDB2E5500560E94 /* FormResponse.swift */; };
 		AA72764B1FDB2E6100560E94 /* JSONResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA72764A1FDB2E6100560E94 /* JSONResponse.swift */; };
 		AADD93811FDEEB2C00BA58B2 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADD93801FDEEB2C00BA58B2 /* Response.swift */; };
-		AADD93841FE04A7D00BA58B2 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADD93831FE04A7D00BA58B2 /* Data.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -119,7 +118,6 @@
 		AA7276481FDB2E5500560E94 /* FormResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormResponse.swift; sourceTree = "<group>"; };
 		AA72764A1FDB2E6100560E94 /* JSONResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONResponse.swift; sourceTree = "<group>"; };
 		AADD93801FDEEB2C00BA58B2 /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
-		AADD93831FE04A7D00BA58B2 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,7 +188,6 @@
 		AA24770E1E74B373009BD4D4 /* SimpleRESTLayer */ = {
 			isa = PBXGroup;
 			children = (
-				AADD93821FE04A6C00BA58B2 /* Extensions */,
 				AA2477101E74B373009BD4D4 /* Info.plist */,
 				AA2477691E7660D7009BD4D4 /* Models */,
 				AA2477721E76689C009BD4D4 /* RESTClient.swift */,
@@ -268,14 +265,6 @@
 				AA72764A1FDB2E6100560E94 /* JSONResponse.swift */,
 			);
 			name = Models;
-			sourceTree = "<group>";
-		};
-		AADD93821FE04A6C00BA58B2 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				AADD93831FE04A7D00BA58B2 /* Data.swift */,
-			);
-			name = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -526,7 +515,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA24776D1E76618B009BD4D4 /* ResponseError.swift in Sources */,
-				AADD93841FE04A7D00BA58B2 /* Data.swift in Sources */,
 				AA24776B1E766115009BD4D4 /* Request.swift in Sources */,
 				AA2477731E76689C009BD4D4 /* RESTClient.swift in Sources */,
 				AADD93811FDEEB2C00BA58B2 /* Response.swift in Sources */,
