@@ -65,8 +65,9 @@ public struct RESTClient {
         let session = URLSession(configuration: configuration)
         #endif
         
+        dump(request: request)
         session.dataTask(with: request) { data, urlResponse, error in
-            self.dump(request, urlResponse)
+            self.dump(response: urlResponse)
             
             do {
                 if let error = error { throw error }
@@ -99,15 +100,6 @@ public struct RESTClient {
         #endif
     }
     
-    private func dump(_ request: URLRequest, _ response: URLResponse?) {
-        #if DEBUG
-            dump(request: request)
-            if let response = response as? HTTPURLResponse {
-                dump(response: response)
-            }
-        #endif
-    }
-    
     private func dump(request: URLRequest) {
         dump("Request URL:\t\(request.httpMethod!) \(request.url!.absoluteString)")
         
@@ -120,7 +112,9 @@ public struct RESTClient {
         }
     }
     
-    private func dump(response: HTTPURLResponse) {
+    private func dump(response: URLResponse?) {
+        guard let response = response as? HTTPURLResponse else { return }
+        
         if let responseURL = response.url?.absoluteString {
             dump("Response URL:\t\(responseURL)")
         }
