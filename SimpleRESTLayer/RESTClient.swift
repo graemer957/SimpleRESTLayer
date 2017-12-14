@@ -87,7 +87,7 @@ public struct RESTClient {
     // MARK: - Private methods
     private func dump(_ text: String) {
         #if DEBUG
-            print("[RESTClient] \(text)")
+            print("\(Date()) [RESTClient] \(text)")
         #endif
     }
     
