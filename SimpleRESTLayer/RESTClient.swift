@@ -12,8 +12,9 @@ import Dispatch
 public struct RESTClient {
     // MARK: - Properties
     private let configuration: URLSessionConfiguration
-    private let session: URLSession
+    private var session: URLSession
     var queue: DispatchQueue = .main
+    var authorisation = Authorisation.none { didSet { updateAuthorisationHeader() }}
     
     // MARK: - Structs
     private struct Constants {
@@ -21,6 +22,13 @@ public struct RESTClient {
             "Accept": "application/json; charset=utf-8",
             "Accept-Encoding": "gzip"
         ]
+    }
+    
+    // MARK: - Enums
+    enum Authorisation {
+        case none
+        case basic(username: String, password: String)
+        case bearer(token: String)
     }
     
     // MARK: - Initialiser
@@ -125,6 +133,25 @@ public struct RESTClient {
     }
 }
 
+// MARK: - Authorisation
+extension RESTClient {
+    private mutating func updateAuthorisationHeader() {
+        switch authorisation {
+        case .none:
+            configuration.authorisationHeader = nil
+        case let .basic(username: username, password: password):
+            guard let credentials = "\(username):\(password)".data(using: .utf8)?.base64EncodedString() else {
+                preconditionFailure("Unable to base64 encode email and password")
+            }
+            configuration.authorisationHeader = "Basic \(credentials)"
+        case let .bearer(token: token):
+            configuration.authorisationHeader = "Bearer \(token)"
+        }
+        session = URLSession(configuration: configuration)
+        dumpAllConfigurationHeaders()
+    }
+}
+
 extension URLSessionConfiguration {
     fileprivate func userAgent(using appName: String?) {
         if let infoDictionary = Bundle.main.infoDictionary,
@@ -134,6 +161,11 @@ extension URLSessionConfiguration {
             let userAgent = "\(appName ?? name) v\(version) (\(build))"
             httpAdditionalHeaders?["User-Agent"] = userAgent
         }
+    }
+    
+    fileprivate var authorisationHeader: String? {
+        get { return httpAdditionalHeaders?["Authorization"] as? String }
+        set { httpAdditionalHeaders?["Authorization"] = newValue }
     }
 }
 
