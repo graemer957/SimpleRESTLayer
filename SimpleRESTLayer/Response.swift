@@ -34,7 +34,7 @@ public struct Response {
         case badRequest = 400
         
         /// The request requires user authentication
-        case unauthorized = 401
+        case unauthorised = 401
         
         /// The server understood the request, but is refusing to fulfill it
         case forbidden = 403
