@@ -4,6 +4,7 @@
 [![Language](https://img.shields.io/badge/language-Swift%204.0-orange.svg)](https://developer.apple.com/swift/)
 [![Platforms](https://img.shields.io/badge/platform-ios%20%7C%20macos%20%7C%20tvos%20%7C%20watchos%20%7C%20linux-yellow.svg)](https://gitlab.com/optimisedlabs/simplerestlayer)
 [![Swift PM](https://img.shields.io/badge/spm-compatible-brightgreen.svg)](https://swift.org/package-manager)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg)](https://github.com/Carthage/Carthage)
 [![Twitter](https://img.shields.io/badge/contact-@graemer957-blue.svg)](https://twitter.com/graemer957)
 [![License](https://img.shields.io/badge/license-Apache--2.0-lightgrey.svg)](https://github.com/graemer957/helloworld-swift-framework/blob/master/LICENSE)
 
@@ -58,10 +59,10 @@ client.execute(request) { (result: Result<IP>) in
 In your `Packages.swift` add:
 
 ```swift
-.package(url: "https://gitlab.com/optimisedlabs/simplerestlayer.git", .from: "0.5.0")
+.package(url: "https://gitlab.com/optimisedlabs/simplerestlayer.git", .from: "0.7.0")
 ```
 
-*NOTE*: `.upToNextMinor(from: "0.5.0")` might be better whilst the API stablises.
+*NOTE*: `.upToNextMinor(from: "0.7.0")` might be better whilst the API stablises.
 
 ### Dynamic Framework
 
@@ -76,7 +77,7 @@ Copy the Swift files from `SimpleRESTLayer` into your project.
 - [ ] Add unit tests
 - [ ] Add code coverage with [codecov.io](https://github.com/codecov/example-swift)
 - [x] Add SwiftLint
-- [ ] Add support for Carthage
+- [x] Add support for Carthage
 - [ ] Add support for CocoaPods
 - [x] Add codebeat.co
 - [x] Add support for Swift Package Manager
