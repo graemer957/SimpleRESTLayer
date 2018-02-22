@@ -73,8 +73,8 @@ public struct Response {
         case gatewayTimeout = 504
     }
 
-    let status: Status
-    let headers: [AnyHashable: Any]
+    public let status: Status
+    public let headers: [AnyHashable: Any]
     
     init(_ status: Status, headers: [AnyHashable: Any]) {
         self.status = status
