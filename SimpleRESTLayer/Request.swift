@@ -25,7 +25,7 @@ public struct Request {
             preconditionFailure("Could not build URLComponents from address")
         }
         if let urlParameters = urlParameters {
-            urlComponents.setQueryItems(from: urlParameters)
+            urlComponents.queryItems = urlParameters.map { URLQueryItem(name: $0.key, value: $0.value) }
         }
         guard let URL = urlComponents.url else { preconditionFailure("Could not get .url from URLComponents") }
         
@@ -53,12 +53,6 @@ public extension URLRequest {
         let data = try encoder.encode(body)
         addValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
         httpBody = data
-    }
-}
-
-extension URLComponents {
-    mutating func setQueryItems(from dictionary: [String: String]) {
-        queryItems = dictionary.map { URLQueryItem(name: $0.key, value: $0.value) }
     }
 }
 
