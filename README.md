@@ -2,15 +2,15 @@
 
 [![codebeat badge](https://codebeat.co/badges/118122e9-f912-47e5-89d2-13a5dcc92f34)](https://codebeat.co/projects/github-com-graemer957-simplerestlayer-master)
 [![Language](https://img.shields.io/badge/language-Swift%204.0-orange.svg)](https://developer.apple.com/swift/)
-[![Platforms](https://img.shields.io/badge/platform-ios%20%7C%20macos%20%7C%20tvos%20%7C%20watchos%20%7C%20linux-yellow.svg)](https://gitlab.com/optimisedlabs/simplerestlayer)
+[![Platforms](https://img.shields.io/badge/platform-ios%20%7C%20macos%20%7C%20tvos%20%7C%20watchos%20%7C%20linux-yellow.svg)](/)
 [![Swift PM](https://img.shields.io/badge/spm-compatible-brightgreen.svg)](https://swift.org/package-manager)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg)](https://github.com/Carthage/Carthage)
-[![Twitter](https://img.shields.io/badge/contact-@graemer957-blue.svg)](https://twitter.com/graemer957)
-[![License](https://img.shields.io/badge/license-Apache--2.0-lightgrey.svg)](https://github.com/graemer957/helloworld-swift-framework/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/license-Apache--2.0-lightgrey.svg)](LICENSE)
 
 A simple REST layer, written in Swift built on top of URLSession. Thanks to the new JSON Encoder/Decoder and Codable in Swift 4 is extremely lightweight and easy to use.
 
 ## Features
+
 - [x] Supports [Codable](https://github.com/apple/swift-evolution/blob/master/proposals/0166-swift-archival-serialization.md) models
 - [x] JSON / URL Encoding
 - [x] Custom HTTP Headers
@@ -44,10 +44,12 @@ client.execute(request) { (result: Result<IP>) in
 ```
 
 ## Dependancies
+
 - [Foundation](https://developer.apple.com/documentation/foundation/urlsession)
 - [Dispatch](https://developer.apple.com/documentation/dispatch)
 
 ## Requirements
+
 - Swift 4.0+ / Xcode 9.0+
 - iOS 10.0+ / macOS 10.12+ / tvOS 10.0+ / watchOS 3.0+
 - Ubuntu 14.04 / Ubuntu 16.04 / Ubuntu 16.10
@@ -92,4 +94,4 @@ The ideas and inspiration for this framework have been sourced from a number of 
 
 ## License
 
-SimpleRESTLayer is released under the Apache 2.0 license. See [LICENSE](https://github.com/graemer957/helloworld-swift-framework/blob/master/LICENSE) for details.
+SimpleRESTLayer is released under the Apache 2.0 license. See [LICENSE](LICENSE) for details.
