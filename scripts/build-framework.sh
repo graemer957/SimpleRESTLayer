@@ -49,10 +49,10 @@ mkdir "${OUTPUT}"
 # Build
 ######################
 # Build for simulator
-xcodebuild -target ${PROJECT_NAME} -sdk iphonesimulator -configuration ${CONFIGURATION} ARCHS="i386 x86_64" ONLY_ACTIVE_ARCH=NO clean build CONFIGURATION_BUILD_DIR=${BUILD_DIR}/${CONFIGURATION}-iphonesimulator
+xcodebuild -target ${PROJECT_NAME} -sdk iphonesimulator -configuration ${CONFIGURATION} -UseModernBuildSystem=NO ARCHS="i386 x86_64" ONLY_ACTIVE_ARCH=NO clean build CONFIGURATION_BUILD_DIR=${BUILD_DIR}/${CONFIGURATION}-iphonesimulator
 
 # Build for device
-xcodebuild -scheme ${PROJECT_NAME} -sdk iphoneos -configuration ${CONFIGURATION} -archivePath ${BUILD_DIR} ARCHS="armv7 arm64" ONLY_ACTIVE_ARCH=NO clean archive CONFIGURATION_BUILD_DIR=${BUILD_DIR}/${CONFIGURATION}-iphoneos
+xcodebuild -scheme ${PROJECT_NAME} -sdk iphoneos -configuration ${CONFIGURATION} -archivePath ${BUILD_DIR} -UseModernBuildSystem=NO ARCHS="armv7 arm64" ONLY_ACTIVE_ARCH=NO clean archive CONFIGURATION_BUILD_DIR=${BUILD_DIR}/${CONFIGURATION}-iphoneos
 
 
 ######################
