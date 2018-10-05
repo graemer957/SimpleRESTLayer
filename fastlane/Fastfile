@@ -5,7 +5,7 @@
 # Skip the creation of fastlane documentation. Can always be done manually with 'fastlane docs'
 skip_docs
 
-fastlane_version "2.62.1"
+fastlane_version "2.105.2"
 
 default_platform :ios
 
