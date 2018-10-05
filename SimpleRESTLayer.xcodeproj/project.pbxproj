@@ -491,7 +491,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed! Install using 'brew install swiftlint'\"\nfi";
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed! Install using 'brew install swiftlint'\"\nfi\n";
 		};
 		AA24772C1E74B655009BD4D4 /* Build Framework */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -505,7 +505,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PROJECT_DIR}/scripts/build-framework.sh\"";
+			shellScript = "\"${PROJECT_DIR}/scripts/build-framework.sh\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
