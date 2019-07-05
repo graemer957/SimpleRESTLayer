@@ -37,11 +37,11 @@ public struct Request {
 }
 
 public extension URLRequest {
-    public mutating func addHeaders(_ headers: [String: String]) {
+    mutating func addHeaders(_ headers: [String: String]) {
         headers.forEach { addValue($0.value, forHTTPHeaderField: $0.key) }
     }
     
-    public mutating func addFormURLEncodedBody(_ body: [String: String]) {
+    mutating func addFormURLEncodedBody(_ body: [String: String]) {
         let encoded = body.map { "\($0.key)=\($0.value.RFC3986Encoded() ?? "")" }
             .joined(separator: "&")
         
@@ -49,7 +49,7 @@ public extension URLRequest {
         httpBody = encoded.data(using: .utf8)
     }
     
-    public mutating func addJSONBody<T: Encodable>(_ body: T, with encoder: JSONEncoder = JSONEncoder()) throws {
+    mutating func addJSONBody<T: Encodable>(_ body: T, with encoder: JSONEncoder = JSONEncoder()) throws {
         let data = try encoder.encode(body)
         addValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
         httpBody = data
